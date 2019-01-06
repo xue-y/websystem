@@ -5,25 +5,36 @@
 	助手函数：       think-helper:              1.0.6
 	验证码：         think-captcha:             2.0.2
 	后端分页插件:    Datatable:                 1.10.7  
-	数据前端验证:    BootstrapValidator         0.5.3
-	其他一些插件 
+	后端模板：       AdminLTE
+	数据前端验证:    BootstrapValidator         0.5.3	
+	其他一些插件: 
 		chart-js 图表     
 		summernote 编辑器  
 		bootstrap-datepicker 时间
 	
 
 #### 项目功能    
-     INSTALL 	系统安装  
-     RBAC  		权限管理
-     AI 		前端网站
-                        前端部分是请求的百度Api 文字识别（OCR）接口
-                        Api 请求文件 /extend/ImgWord.php
-     LOG 		日志管理
-                        登录、操作记录
-     SYS 		系统设置
-                        设置分类
-                        设置项变量定义  					
-    各个模块分开独立，方便后期扩展其他模块	   
+     install 	系统安装 
+     pub            后台基本模块
+                    |---- 登录（登录密码错误超过，设置项变量中定义的pass_error_num 的次数自动锁屏 lock_t 秒）
+                    |---- 找回密码
+                    |---- 邮箱管理
+     back           管理员公共权限
+                    |---- 登录、操作记录
+                    |---- 系统锁屏
+                    |---- 个人信息修改
+     admin  	权限管理
+     ai 		前端网站
+                    |----前端部分是请求的百度Api 文字识别（OCR）接口
+                    |----Api 请求文件 /extend/ImgWord.php
+     log 		日志管理
+                    |----登录、操作记录
+     sys 		系统设置
+                    |----设置分类
+                    |----设置项变量定义  
+                                   					
+    各个模块分开独立，方便后期扩展其他模块
+    前后台页面均是自适应，后台管理系统基于AdminLTE模板，去掉一些不需要的插件，加快了页面加载速度	   
 
 #### 项目运行环境   
 配置项中开启了 【自动作转换URL中的控制器和操名】，Win 环境正常访问，如果 Liunx 环境建议改为 false         
@@ -40,7 +51,7 @@ php5.6/ php7.0 + Apache/Ngingx 均正常访问，其他版本未测试
 #### 多语言说明
 多语言中的字段分割符统一使用 英文分号 ;            
 文件变量中调用全部使用多语言调用，默认是使用的中文语言文件；    
-如果添加多语言在/lang/ 文件夹，各个模块下，以及/public/*/js/* 文件夹下添加对应的语言文件即可
+如果添加多语言在/lang/ 文件夹，各个模块下，以及/public/*/js/* 文件夹下添加对应的语言文件即可     
 下列文件除外（没有使用多语言）<br/>
     public\static\back\js\install.js   
     public\static\home\js\index.js    
