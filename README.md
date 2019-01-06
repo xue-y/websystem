@@ -52,11 +52,10 @@ php5.6/ php7.0 + Apache/Ngingx 均正常访问，其他版本未测试
 多语言中的字段分割符统一使用 英文分号 ;            
 文件变量中调用全部使用多语言调用，默认是使用的中文语言文件；    
 如果添加多语言在/lang/ 文件夹，各个模块下，以及/public/*/js/* 文件夹下添加对应的语言文件即可     
-下列文件除外（没有使用多语言）<br/>
-    public\static\back\js\install.js   
-    public\static\home\js\index.js    
-    ai\html\view\*.html	
-    
+下列文件除外（没有使用多语言）
+- public\static\back\js\install.js   
+- public\static\home\js\index.js    
+- ai\html\view\*.html	
 
 ThinkPHP 5.1
 ===============
@@ -146,8 +145,8 @@ www  WEB部署目录（或者子目录）
 ├─LICENSE.txt           授权说明文件
 ├─README.md             README 文件
 ├─think                 命令行入口文件
-├─template.zip			静态模板文件
-├─test.sql				测试数据库文件
+├─template.zip		静态模板文件
+├─test.sql              测试数据库文件
 ~~~
 
 > router.php用于php自带webserver支持，可用于快速测试
