@@ -1,0 +1,102 @@
+<body class="sticky-header">
+    <!--Start left side Menu-->
+    <div class="left-side sticky-left-side">
+        <!--logo-->
+        <div class="logo">
+            <a href="index" target="right"><img src="{$Think.config.back_img}logo.png"></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="index" target="right"><img src="{$Think.config.back_img}logo-icon.png"></a>
+        </div>
+        <!--logo-->
+
+        <div class="left-side-inner">
+            <!--Sidebar nav  这里显示 2 个级别菜单-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                {foreach $menu as $k=>$v }
+                <li class="menu-list"><a href="#"> <i class="{$v.icon}"></i> <span>{$v.biaoshi_name}</span></a>
+                    <ul class="sub-menu-list">
+                      {if isset($menu[$k]['items']) AND is_array($menu[$k]['items']) }
+                        {foreach $menu[$k]['items'] as $kk=>$vv }<!--锁屏-->
+                        {if ($vv.mc_name == 'back/LockScreen') OR ( $vv.mc_name == 'back/lock_screen') }
+                        <li><a href="{:url($vv.mc_name.'/index')}"  target="_self">{$vv.biaoshi_name}</a></li>
+                        {else  /}
+                        <li><a href="{:url($vv.mc_name.'/index')}"  target="right">{$vv.biaoshi_name}</a></li>
+                        {/if}
+                        {/foreach}
+                      {/if}
+                    </ul>
+                </li>
+                {/foreach}
+            </ul>
+            <!--End sidebar nav-->
+        </div>
+    </div>
+    <!--End left side menu-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+        <!-- header section start-->
+        <div class="header-section">
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+
+                    <li>
+                        <a href="{:url('index/index/index')}" target="_blank" class="m-r-10">{:lang('home_index')}</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                            {$name}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu">
+                         {foreach $back_nav as $k=>$v }
+                          <li> <a href="{:url($v.mc_name.'/index')}"> <i class="{$v.icon}"></i> {$v.biaoshi_name} </a> </li>
+                          {/foreach}
+                          <li> <a href="{:url('pub/Login/out')}"> <i class="icon-logout"></i> {:lang('login_out')} </a> </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- header section end-->
+
+        {present name="login_user"} <!--登录提醒-->
+        <div class="alert alert-warning alert-dismissible" role="alert" style="border-radius:0px">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>{$Think.lang.warning}</strong>
+            {:lang('login_user_info',[$login_user])}
+            <a href="{:url('Login/index',['id'=>$id])}" target="right">
+            {$Think.lang.menu_log_login}
+            </a>
+        </div>
+        {/present}
+
+   <!-- start content -->
+   <iframe src="{:url('index')}" frameborder="0" width="100%" name="right" bgcolor="none"  class="wrapper"></iframe>
+   <!--end content-->
+    </div>
+<!-- end main content  -->
+{include file="static/back/com_js.html" /}
+<!--Begin core plugin -->
+<script  src="{$Think.config.back_js}jquery.slimscroll.js "></script>
+<script src="{$Think.config.back_js}jquery.nicescroll.js"></script>
+<script src="{$Think.config.back_js}functions.js"></script>
+<!-- End core plugin -->
+<script>
+    // 锚点锁定页面
+   var hash=(!window.location.hash)?"":window.location.hash;
+   if((hash!='') && (hash.indexOf('#')!=-1))
+   {
+       $('iframe').attr('src',hash.substring(1));
+   }
+</script>

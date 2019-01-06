@@ -1,0 +1,47 @@
+{include file="static/back/postion_nav.html" /}
+<!--系统设置 表单-->
+<div class="row b_from">
+    <div class="white-box">
+        <div class="container-fluid">
+            <p class="text-danger">
+                {:lang('val_default')}
+                <a class="btn btn-primary f-right"  href="{:url('create',['tid'=>$tid])}">&nbsp;<i class="fa fa fa-plus"></i>
+                    <span>{:lang('create')}</span>
+                </a>
+            </p>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2 m-b-20">
+                {foreach $type_list as $k=> $v}
+                    {eq name="tid" value="$v.id"}
+                     <a href="{:url('index',['tid'=>$v.id])}" class="btn btn-primary active m-b-5" style="border-radius:0px" >{$v.systype}</a>
+                    {else/}
+                    <a href="{:url('index',['tid'=>$v.id])}" class="btn btn-primary m-b-5" style="border-radius:0px" >{$v.systype}</a>
+                    {/eq}
+                {/foreach}
+                </div>
+            </div>
+        </div>
+         {foreach $list as $k=> $v}
+         <div class="form-group">
+            <label class="col-md-2 control-label">
+                {$v.syskey}
+            </label>
+            <div class="col-md-9">
+                <input class="form-control" value="{$v.sysval|stripslashes}" type="text"  readonly>
+                <p class="m-t-5">{$v.notes}</p>
+            </div>
+
+             <div class="col-md-1 m-t-5">
+                 <a href="{:url('edit',['id'=>$v.id,'tid'=>$tid])}" ><i class="fa fa-2x fa-edit text-warning"></i></a>
+                  &nbsp;
+                 {neq name="v.is_sys" value="$Think.config.sys_val_inner"}
+                 <a data-href="{:url('delete',['id'=>$v.id,'tid'=>$tid])}" onclick="del($(this))" class="fa fa-2x fa-trash-o text-danger"></a>
+                 {/neq}
+             </div>
+
+         </div>
+         {/foreach}
+    </div>
+</div>
+{include file="static/back/com_js.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>

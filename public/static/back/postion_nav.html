@@ -1,0 +1,42 @@
+<div id="alert" class="alert-warning alert-dismissible p-15" role="alert">
+    <i class="fa fa-warning "></i> <span class="text"></span>
+</div> <!-- 批量操作提醒框-->
+
+<!-- 单个删除确认 -->
+<div class="modal" id="del_model">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">{:lang('prompt_message')}</h4>
+            </div>
+            <div class="modal-body">
+            {:lang('del_model')}
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{:lang('cancel')}</button>
+                <button onclick="del_submit()" class="btn btn-primary" data-dismiss="modal">{:lang('confirm')}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- start postion nav-->
+<div class="page-title-box">
+    <h4 class="page-title"><a href="{:url('back/Index/index')}" >{$Think.lang.menu_back_index}</a></h4>
+    <ol class="breadcrumb">
+          <li>
+              <a href="#"><span style="vertical-align: inherit;">{$Request.param.postion_nav['m']}</span></a>
+          </li>
+          <li>
+              <a href="{:url($Request.param.postion_nav['c_url'].'/index')}">{$Request.param.postion_nav['c']}</a>
+          </li>
+          <li class="active"><span style="vertical-align: inherit;">
+              {$Request.param.postion_nav['a']}
+          </span></li>
+      </ol>
+    <div class="clearfix"></div>
+</div>
+<!-- end postion nav-->
+<div  class="wrapper_row clearfix">

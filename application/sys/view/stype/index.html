@@ -1,0 +1,57 @@
+<!--普通列表-->
+<style>
+   .form-group{ float:none;}
+</style>
+{include file="static/back/postion_nav.html" /}
+ <!-- Start responsive Table-->
+         <div class="white-box">
+           <form  method="post">
+               {:token()}
+               <div class="form-group">
+                   <a class="btn btn-primary outline-btn add"  href="{:url('create')}"><i class="icon icon-plus"></i>&nbsp;
+                   <span>{:lang('create')}</span>
+                  </a>
+                   <a class="btn btn-edit outline-btn" onclick="operation($(this),'{:lang(\'edit\')}','{:url(\'edit\')}')">
+                       <i class="fa fa-edit"></i>&nbsp;
+                       <input type="button" value="{:lang('edit')}">
+                   </a>
+                   <a class="btn btn-del outline-btn" onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+                       <i class="fa fa-trash-o"></i>
+                       <input type="button" value="{:lang('deletes')}">
+                   </a>
+               </div>
+
+             <div class="table-responsive">
+                 <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th width="15%"><input type="checkbox"> </th>
+                      <th>ID</th>
+                      <th>{:lang('sys_stype')['systype']}</th>
+                      <th>{:lang('operation')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {foreach $list as $k=>$v }
+                    <tr>
+                      <td><input type="checkbox" value="{$v.id}" name="id[]"></td>
+                      <td class="id">{$v.id}</td>
+                      <td><a href="{:url('Sset/index',['tid'=>$v.id])}">{$v.systype}</a></td>
+                      <td> <a href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
+                          <a data-href="{:url('delete',['id'=>$v.id])}"  onclick="del($(this))">
+                              <i  class="fa fa-trash-o text-danger"></i>
+                          </a>
+                      </td>
+                    </tr>
+                  {/foreach}
+                   </tbody>
+                </table>
+             </div>
+           </form>
+         </div>
+       <!-- End responsive Table-->
+<!--End main content -->
+{include file="static/back/com_js.html" /}
+<link href="{$Think.config.back_plus}datatables/datatables.css" rel="stylesheet">
+<script src="{$Think.config.back_plus}datatables/datatables.js"></script>
+<script src="{$Think.config.back_js}arc_list.js"></script>

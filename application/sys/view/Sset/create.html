@@ -1,0 +1,74 @@
+{include file="static/back/postion_nav.html" /}
+<!--设置项自定义变量 表单-->
+<!--Start row-->
+<div class="row">
+   <div class="white-box">
+   <!--<h2 class="header-title">Form Validation</h2>-->
+       <form class="b_from" method="post" action="{:url('save')}">
+           {:token()}
+           <div class="form-group">
+               <label class="col-md-2 control-label">{:lang('sys_sset')['systid']} <span class="red">*</span> </label>
+               <div class="col-md-10">
+                   <select class="form-control" name="systid">
+                       <option value="">-- {:lang('type')} --</option>
+                       {foreach $type_list as  $v}
+                       {eq name="tid" value="$v.id"}
+                       <option value="{$v.id}" selected>{$v.systype}</option>
+                       {else/}
+                       <option value="{$v.id}">{$v.systype}</option>
+                       {/eq}
+                       {/foreach}
+                   </select>
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-md-2 control-label">{:lang('sys_sset')['syskey']}<span class="red">*</span> </label>
+               <div class=" col-md-10">
+                   <input type="text" class="form-control" name="syskey"  placeholder=""/>
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-md-2  control-label">{$sysval[0]} <span class="red">*</span> </label>
+               <div class=" col-md-10">
+                   <input type="text" class="form-control" name="sysval"  />
+                   <p class="m-t-5">{$sysval[1]}</p>
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sys_sset')['notes']} : </label>
+               <div class=" col-md-10">
+                   <input type="text" class="form-control" name="notes"  />
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-md-2 control-label">{$is_sys[0]}： </label>
+               <div class="col-md-10 radio m-t-5">
+                   <input type="radio" name="is_sys"  value="{$Think.config.sys_val_inner}"  >
+                   <label style="width:65px;">YES</label>
+                   <input type="radio" name="is_sys"  value="0" checked>
+                   <label >NO</label>
+                   <p style="margin-left: -20px;">{$is_sys[1]}</p>
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-md-2"></label>
+               <div class="col-md-10" >
+                   <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                   &nbsp;  &nbsp; &nbsp;
+                   <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+               </div>
+           </div>
+
+       </form>
+   </div>
+</div>
+ <!-- end row -->
+<!--表单验证插件-->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>

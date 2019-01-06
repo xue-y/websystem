@@ -1,0 +1,191 @@
+<!--admin 添加角色  表单-->
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<div class="row">
+    <div class="white-box">
+        <p class="text-danger m-l-10">{:lang('pass_empty_info')}</p>
+        <p class="text-danger m-l-10">{:lang('name_TakeEffect')}</p>
+
+        <form class="b_from" method="post" action="{:url('save')}">
+            {:token()}
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_name')} <span class="red">*</span></label>
+                <div class=" col-md-10">
+                    <input type="text"  readonly class="form-control" name="name" value="{$Request.param.user_name}"  autocomplete="off"   />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_oldpass')} </label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="oldpass"  autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_pass')} </label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="pass" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_pass2')}</label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="pass2" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_email')}</label>
+                <div class="col-md-4 m-b-5">
+                    <input type="text"  class="form-control" name="email" value="{$email}" />
+                </div>
+                <label class="col-md-5 ">
+                <a class="btn btn-primary email outline-btn"  target="_blank" style="line-height: 38px; padding: 0px 7px;" ></a>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2"></label>
+                <div class="col-md-10" >
+                    <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!--绑定邮件提醒信息-->
+<div class="modal" id="email_model">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">{:lang('prompt_message')}</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--表单验证插件-->
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>
+
+<script>
+    // 用户名
+    $("input[name='name']").on({
+        'click':function () {
+            $(this).removeAttr('readonly');
+        },
+        'blur':function () {
+            $(this).attr('readonly',true);
+        }
+    });
+
+    // 邮箱
+    var email=$("input[name='email']").val();
+    var email_txt_default,behavior; // 记录原始按钮文本,行为
+    if(email=='')
+    {
+        email_txt_default='{:lang("admin_user_bemail")}';
+        $('.email').text('{:lang("admin_user_bemail")}');
+        behavior='admin_user_bemail';
+    }else
+    {
+        email_txt_default="{:lang('admin_user_ubemail')}";
+        $('.email').text("{:lang('admin_user_ubemail')}");
+        behavior='admin_user_ubemail';
+    }
+
+    //重新发送邮件
+   var e_a_s= "{:lang('email_again_send')}";
+    // 进入邮箱
+   var e_s_s="{:lang('email_send_success')}";
+
+    // 记录时间间隔
+    var interval_t={$email_interval_t},t=null;
+    var btn=false;
+
+    $('.email').click(function(){
+	
+        if(btn==true)
+            return;
+        // 重新发送邮件
+        if($('.email').hasClass('email_ok') && ($('.email').text()==e_s_s))
+        {
+            return;
+        }
+
+        btn=true;
+        var _this=$('.email');
+        _this.attr('disabled',true);
+
+        // 验证 email 字段
+        var email=$("input[name='email']").val();
+        email=$.trim(email);
+        if(email=='')
+        {
+			$("#email_model").show();
+            $("#email_model .modal-body").text("{:lang('reemail_empty')}");
+            return;
+        }
+        if(!$("input[name='email']").siblings('i').hasClass('glyphicon-ok') &&  (behavior=='admin_user_bemail'))
+        {
+            return;
+        }
+
+        // 开始计时
+        t=setInterval(function(){
+            interval_t--;
+            $('.email').text(interval_t+'秒后重发');
+            if(interval_t<=0)
+            {
+                btn=false;
+                $('.email').text(email_txt_default);
+                _this.removeAttr('disabled');
+                clearInterval(t);
+            }
+        },1000);
+
+         var token=$("input[name='__token__']").val();
+
+           // ajax 发送邮件
+           $.ajax({
+               type:"POST",
+               url:"{:url('send_email')}",
+               data:{'email':email,'__token__':token,'behavior':behavior},
+               success: function(data,status,xhr){
+                   // console.log(data);
+                   $("input[name='__token__']").val(data.token);
+
+                   if(data.error=='ok')
+                   {
+                       $('.email').addClass('email_ok');
+                       $('.email').attr('href','https://'+gotoEmail(email));
+                       $('.email').text(e_s_s);
+                   }else
+                   {
+                       $("#email_model").show();
+                       $("#email_model .modal-body").text(data.error);
+                       $('.email').text(e_a_s);
+                   }
+               },
+               complete:function(){
+                   _this.removeAttr('disabled');
+                   clearInterval(t);
+                   btn=false;
+               },
+               error: function(xhr,status,errorinfo){
+                   $('.email').text(e_a_s);
+                   $("#email_model").show();
+                   $("#email_model .modal-body").text("(: "+status+': '+errorinfo);
+               },
+               timeout:5000
+           });
+    });
+</script>

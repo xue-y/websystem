@@ -1,0 +1,77 @@
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <!--<h2 class="header-title">Form Validation</h2>-->
+            <form class="b_from" method="post" action="{:url('update')}">
+                {:token()}
+                <div class="form-group">
+                    <label class="col-md-2 ">{:lang('ai_nav')['nav_name']} <span class="red">*</span></label>
+                    <div class=" col-md-10">
+                        <input type="text" class="form-control" name="nav_name" value="{$nav_name}"  />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 ">{:lang('ai_nav')['nav_biaoshi']} </label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="nav_biaoshi" value="{$nav_biaoshi}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 ">{:lang('key_word')} </label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="keyword"  value="{$keyword}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="col-md-2">{:lang('describe')}</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="description" name="description" value="{$description}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="order" class="col-md-2">{:lang('sort')}</label>
+                    <div class="col-md-10">
+                        <input type="number" class="form-control" id="order" min="0"  name="sort" value="{$sort}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-md-2 control-label">{$tit}： </label>
+                    <div class="col-md-10 radio m-t-5">
+                      {eq name="is_show" value="1"}
+                            <input type="radio" name="is_show"  value="1" checked >
+                            <label   style="width:65px;">{:lang('show')}</label>
+                            <input type="radio" name="is_show"  value="0">
+                            <label >{:lang('hidden')}</label>
+                        {else/}
+                            <input type="radio" name="is_show"  value="1" >
+                            <label   style="width:65px;">{:lang('show')}</label>
+                            <input type="radio" name="is_show"  value="0" checked >
+                            <label >{:lang('hidden')}</label>
+                      {/eq}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2"></label>
+                    <div class="col-md-10" >
+                        <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                        &nbsp;  &nbsp; &nbsp;
+                        <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>

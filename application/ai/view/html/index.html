@@ -1,0 +1,70 @@
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<div class="white-box">
+    <!--<h2 class="header-title">Form Validation</h2>-->
+    <form class="b_from" method="post" action="{:url('html')}">
+        <div class="radio">
+            <input type="radio" name="type"  value="all" id="radio-1">
+            <label for="radio-1">{:lang('write_module')}</label>
+        </div>
+
+        <div class="radio">
+            <input type="radio" name="type"  value="index"  id="radio-2">
+            <label for="radio-2">{:lang('index')}</label>
+            <a href="{:url('ai/html/html_index')}" target="_blank" class="m-l-15">{:lang('home_index')}</a>
+        </div>
+
+        <div class="radio">
+            <input type="radio" name="type"  value="nav"  id="radio-3">
+            <label for="radio-3">
+                <select name="nav" class="form-control"  style="min-width: 200px">
+                    <option value="{$nav|array_keys|implode=','}">{:lang('write_nav')}</option>
+                    {foreach $nav as $k=>$v }
+                    <option value="{$k}">{$v}</option>
+                    {/foreach}
+                </select>
+            </label>
+        </div>
+
+        <div class="radio">
+            <input type="radio" name="type"  value="page" id="radio-4">
+            <label for="radio-4">
+                <select name="page" class="form-control" style="min-width: 200px">
+                    <option  value="{$page|array_keys|implode=','}"  >{:lang('write_page')}</option>
+                    {foreach $page as $k=>$v }
+                    <option value="{$k}">{$v}</option>
+                    {/foreach}
+                </select>
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <input type="checkbox" name="update" id="checkbox-1" value="1" class="m-l-10">
+            <label for="checkbox-1"></label> <span class="m-l-15">{:lang('is_update_cahce')}</span>
+        </div>
+
+     <input type="button" value="{:lang('write_html')}"  class="btn btn-success m-l-15 m-t-20">
+
+    </form>
+</div>
+<style>
+    .radio{ margin-bottom: 20px; vertical-align: middle}
+    .radio label::before{top:2px;}
+    .radio label::after{top:7px;}
+</style>
+{include file="static/back/com_js.html" /}
+<script>
+   $('input.btn-success').click(function(){
+        var _this=$('input.btn-success');
+        var select_d= $("input[type='radio']:checked").val();
+        if(select_d==undefined)
+        {
+             //如果没有选择数据
+             $("#alert .text").text("{:lang('select_file')}");
+             $("#alert").stop(true).slideDown().delay(4000).slideUp();
+        }else
+        {
+            _this.attr('type','submit');
+        }
+    });
+</script>

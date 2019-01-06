@@ -1,0 +1,102 @@
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<div class="white-box">
+        <form class="table-responsive" method="get">
+            <div class="form-group">
+
+                <a class="btn btn-del outline-btn m-b-5 f-left" onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+                    <i class="fa fa-trash-o"></i>
+                    <input type="button" value="{:lang('deletes')}"  >
+                </a>
+                <button id="list_all" class="btn btn-white" style="box-shadow: none;" title="{:lang('log_list')}">
+                    {:lang('log_data_c')}{$count} / {:lang('log_page_c',[$page_num])}
+                </button>
+
+                <div class="input-daterange" id="date-range">
+                    <input type="text" class="form-control" name="start"  autocomplete="off" placeholder="{$start_t}" >
+                    <span class="input-group-addon no-border text-white" >to</span>
+                    <input type="text" class="form-control" name="end"   autocomplete="off" placeholder="{$end_t}">
+                </div>
+
+
+                {empty name="uid"}
+                <div class="form-group m-r-10"   style="width: 170px;">
+                    <select name="name" class=" form-control h-40">
+                        <option value="" selected>{$n_search}</option>
+                        {foreach $name as $k=>$v }
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                {/empty}
+
+                <input id="search" type="submit" class="btn btn-primary"  value="{:lang('search')}">
+
+            </div>
+            <table class="table no-table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th width="15%">
+                   <input type="checkbox" class="check-mail-all">
+                </th>
+                <th>{:lang('log_name')}</th>
+                <th>{:lang('log_login')['shebie']}</th>
+                <th>{:lang('log_login')['t']}</th>
+                <th>{:lang('log_login')['ip']}</th>
+                <th>{:lang('operation')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $v }
+            <tr>
+                <td>
+                 <input type="checkbox" class="checkbox-mail" name="id[]" value="{$v.id}">
+                </td>
+                <td>
+                {present name="$name[$v.uid]"}
+                  {$name[$v.uid]}
+                {else /}
+                  {:lang('log_user_del',[$v.uid])}
+                {/present}
+                </td>
+                <td><a data-toggle="popover" title="Popover title" data-content="{$v.shebie}">{:lang('log_shebei')}</a></td>
+                <td>{$v.t} </td>
+                <td>{$v.ip}</td>
+                <td>
+                    <a data-href="{:url('delete',['id'=>$v.id])}"  onclick="del($(this),'{:lang(\'delete\')}')">
+                        <i class="fa fa-trash-o text-danger"></i>
+                    </a>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        </form>
+
+        <nav aria-label="Page navigation" class="text-center">
+            {$list|raw}
+        </nav>
+</div>
+<style>
+   select::selected{color:#ddd}
+</style>
+<!--End row-->
+{include file="static/back/com_js.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>
+<link href="/static/back/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"><!--时间-->
+<script src="/static/back/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script>
+    // 时间插件
+    jQuery('#date-range').datepicker({
+        toggleActive: true,
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        // language: 'cn',
+        todayHighlight: true,
+        // 默认显示当天
+        setDate: new Date(),
+        clearBtn: true,  //添加清除按钮
+    });
+
+    // 提示框
+    $('[data-toggle="popover"]').popover()
+</script>

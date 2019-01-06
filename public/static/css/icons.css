@@ -1,0 +1,143 @@
+@import url("icons/font-awesome/font-awesome.css");
+@import url("icons/simple-line-icon/simple-line-icons.css");
+/*
+@import url("icons/themify-icon/themify-icons.css");
+@import url("icons/material-design-icon/materialdesignicons.css");
+@import url("icons/ion-icon/ionicons.css");*/
+button,input{
+    outline: 0px  !important; border: none; background: none;
+}
+a{outline: 0px  !important; }
+.p-0 {
+    padding: 0px !important;
+}
+.p-20 {
+    padding: 20px !important;
+}
+.p-30 {
+    padding: 30px !important;
+}
+.p-l-0 {
+    padding-left: 0px !important;
+}
+.p-r-0 {
+    padding-right: 0px !important;
+}
+.p-t-0 {
+    padding-top: 0px !important;
+}
+.p-b-0 {
+    padding-bottom: 0px !important;
+}
+.p-t-10 {
+    padding-top: 10px !important;
+}
+.p-b-10 {
+    padding-bottom: 10px !important;
+}
+.p-l-10-bi{padding-left: 10% !important;}
+.p-l-10{ padding-left: 10px !important;}
+.p-l-15{ padding-left: 15px !important;}
+.p-l-20{ padding-left: 20px !important;}
+.p-l-r-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.p-15{ padding: 15px;}
+.m-0 {
+    margin: 0px !important;
+}
+.m-r-5 {
+    margin-right: 5px !important;
+}
+.m-r-10 {
+    margin-right: 10px !important;
+}
+.m-r-15 {
+    margin-right: 15px !important;
+}
+.m-l-5 {
+    margin-left: 5px !important;
+}
+.m-l-10 {
+    margin-left: 10px !important;
+}
+.m-l-15 {
+    margin-left: 15px !important;
+}
+.m-t-5 {
+    margin-top: 5px !important;
+}
+.m-t-0 {
+    margin-top: 0px !important;
+}
+.m-t-10 {
+    margin-top: 10px !important;
+}
+.m-t-15 {
+    margin-top: 15px !important;
+}
+.m-t-20 {
+    margin-top: 20px !important;
+}
+.m-t-30 {
+    margin-top: 30px !important;
+}
+.m-t-40 {
+    margin-top: 40px !important;
+}
+.m-b-0 {
+    margin-bottom: 0px !important;
+}
+.m-b-5 {
+    margin-bottom: 5px !important;
+}
+.m-b-10 {
+    margin-bottom: 10px !important;
+}
+.m-b-15 {
+    margin-bottom: 15px !important;
+}
+.m-b-20 {
+    margin-bottom: 20px !important;
+}
+.m-b-25 {
+    margin-bottom: 25px !important;
+}
+.m-b-30 {
+    margin-bottom: 30px !important;
+}
+
+.m-r-5{
+    margin-right:5px;
+}
+.f-left{ float: left;}
+.f-right{float: right;}
+.m-l-r-0{ margin-left: 0px !important; margin-right: 0px !important;}
+.modal{text-align: center;background-color: rgba(0,0,0,0.3);}
+.modal>i{ margin:40vh auto; }
+/* 日志管理图标*/
+.icon-calendar:before {    font-family: 'simple-line-icons';
+    content: "\e075";
+}
+table>thead>tr>th,table>thead>tr>td,table>tbody>tr>td {
+    white-space: nowrap;
+}
+/* 文本编辑器*/
+blockquote {
+    padding: 15px 20px;
+    margin: 0 0 20px;
+    font-size: 16px;
+    border-left: 4px solid #03a9f3;
+    background: #fbfbfb;
+    color: #2f2c2c;
+}
+table,th{  text-align: center;}
+
+.mailbox-content .table > tbody > tr > td{
+    vertical-align: middle;
+}
+
+.mailbox-content .checkbox{
+    margin-bottom: 0;
+}

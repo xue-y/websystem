@@ -1,0 +1,128 @@
+{include file="static/back/postion_nav.html" /}
+<div class="row">
+    <div class="white-box">
+        <div class="mailbox-content">
+            <div class="compose-body">
+                <form class="row b_from" action="{:url('update')}" method="post">
+                    {:token()}
+                    <div class="form-group">
+                        <label for="tit" class="col-md-2 control-label">{:lang('ai_page')['tit']} <span class="red">*</span></label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="tit" name="tit" value="{$tit}" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="keyword" class="col-md-2 control-label">{:lang('key_word')}</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="keyword" name="keyword" value="{$keyword}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-md-2 control-label">{:lang('describe')}</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="description" name="description" value="{$description}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="order" class="col-md-2 control-label">{:lang('sort')}</label>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" id="order" min="0"  name="sort" value="{$sort}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">{:lang('ai_page')['t']}</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <input type="text" value="{$t}" class="form-control" placeholder="yyyy-mm-dd" id="datepicker-autoclose" name="t">
+                                <span class="input-group-addon b-0 text-white"><i class="icon-calender"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">{:lang('ai_page')['con']} <span class="red">*</span></label>
+                        <div class="compose-message col-md-10">
+                            <div class="summernote"></div>
+                        </div> <!--编辑器-->
+                    </div>
+                    <input type="hidden" name="con" id="con" >
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-10" >
+                            <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                            &nbsp;  &nbsp; &nbsp;
+                            <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+                        </div>
+                    </div>
+               </form>
+            </div>
+       </div>
+    </div>
+</div>
+
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<link href="{$Think.config.back_plus}summernote-master/summernote.css" rel="stylesheet" type="text/css"/><!--编辑器-->
+<link href="{$Think.config.back_plus}bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"><!--时间-->
+<!--编辑器 插件-->
+<script src="{$Think.config.back_plus}summernote-master/summernote.min.js"></script>
+<script src="{$Think.config.back_plus}summernote-master/zh_CN.js"></script>
+<!--时间 插件-->
+<script src="{$Think.config.back_plus}bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>
+<script>
+
+    /*编辑器 初始化*/
+    $('.summernote').summernote({
+        height: 350,
+        //功能图标改为中文
+         lang: 'zh-CN',
+        //预设内容
+         placeholder: '请在此输入内容...',
+    });
+    /*取值：  var comment=$(".summernote").code()
+    赋值： $(".summernote").code(data.comment)
+    置空： $(".summernote").code('')*/
+    //
+    var c='{$con|raw}';
+    $(".summernote").code(c);
+
+    /* 时间*/
+    jQuery('#datepicker-autoclose').datepicker({
+        format: "yyyy-mm-dd", // 只能是年月日 无法精确到时分秒
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true  //添加清除按钮
+    });
+    /* 编辑器内容验证*/
+
+    $(".btn-success").click(function(){
+        var val=$(".summernote").code()
+        if(val.length<10 || val.length>10000)
+        {
+            // 返回顶部动画
+            var timer  = null;
+            cancelAnimationFrame(timer);
+            //获取当前毫秒数
+            var startTime = +new Date();
+            //获取当前页面的滚动高度
+            var b = document.body.scrollTop || document.documentElement.scrollTop;
+            var d = 300;
+            var c = b;
+            timer = requestAnimationFrame(function func(){
+                var t = d - Math.max(0,startTime - (+new Date()) + d);
+                document.documentElement.scrollTop = document.body.scrollTop = t * (-c) / d + b;
+                timer = requestAnimationFrame(func);
+                if(t == d){
+                    cancelAnimationFrame(timer);
+                    $("#alert .text").text("{:lang('page_con_len')}");
+                    $("#alert").stop(true).slideDown().delay(4000).slideUp();
+                }
+            });
+            return false;
+        }
+       $("#con").val(val);
+    });
+</script>

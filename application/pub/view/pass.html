@@ -1,0 +1,136 @@
+<body>
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+</style>
+ <!--Start login Section-->
+  <section class="login-section all_full_bg">
+       <div class="container">
+           <div class="row">
+               <div class="login-wrapper">
+                   <div class="login-inner">
+                   		<h2 class="header-title text-center">{$Think.lang.pub_pass}</h2>
+                        <form class="b_from m-t-30">
+                           {:token()}
+                           <div class="form-group">
+                                <input type="text" class="form-control" name="name"  />
+                           </div>
+
+                           <div class="form-group m-t-20">
+                               <input type="text" class="form-control"  placeholder="" name="reemail" >
+                           </div>
+
+                           <div class="form-group v_code m-t-15">
+                               <input type="text" class="form-control"  name="v_code" >
+                               {:captcha_img()}
+                           </div>
+
+                           <a href="{:url('pub/Login/index')}" class="a-link">
+                               <i class=" icon-login"></i> {$Think.lang.pub_login}
+                           </a>
+                           <a href="#" class="email_url f-right text-danger" target="_blank"></a>
+
+                            <div class="form-group  m-t-20">
+                               <input type="submit" value="{:lang('email_send')}" class="btn btn-primary btn-block email" >
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+  </section>
+<!--邮件提醒信息-->
+<div class="modal" id="email_model">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">{:lang('prompt_message')}</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+ <!--End login Section-->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>
+<script>
+    // 点击切换 验证码图片
+    $(".v_code img").click(function () {
+        var src=$(this).attr("src");
+        src = src.split("?");
+        src=src.shift();
+        $(this).attr("src",src+'?'+Math.random())
+    });
+
+    // 邮件发送
+    var email_txt_default="{:lang('email_send')}"; // 记录原始按钮文本
+
+    // 记录时间间隔
+    var interval_t={$email_interval_t},t=null;
+    var btn=false;
+
+    $('.b_from').on('success.form.bv',function(e){
+       e.preventDefault();
+
+        $('.email_url').text('');
+        if(btn==true)
+            return;
+
+        btn=true;
+        var _this=$('.email');
+        _this.attr('disabled',true);
+
+        // 开始计时
+        t=setInterval(function(){
+            interval_t--;
+            $('.email').val(interval_t+'秒后重发');
+            if(interval_t<=0)
+            {
+                btn=false;
+                $('.email').val(email_txt_default);
+                _this.removeAttr('disabled');
+                clearInterval(t);
+            }
+        },1000);
+
+        var token=$("input[name='__token__']").val();
+        var email=$("input[name='reemail']").val();
+
+        // ajax 发送邮件
+        $.ajax({
+            type:"POST",
+            url:"{:url('send_email')}",
+            data:$('.b_from').serialize(),
+            success: function(data,status,xhr){
+              //  console.log(data);
+                $("input[name='__token__']").val(data.token);
+
+                if(data.error=='ok')
+                {
+                    $('.email_url').attr('href','https://'+gotoEmail(email));
+                    $('.email_url').text("{:lang('email_send_success')}");
+                }else
+                {
+                    $("#email_model").show();
+                    $("#email_model .modal-body").text(data.error);
+                }
+            },
+            complete:function(){
+                _this.removeAttr('disabled');
+                clearInterval(t);
+                btn=false;
+                $('.email').removeAttr('disabled').val("{:lang('email_again_send')}");
+            },
+            error: function(xhr,status,errorinfo){
+                $("#email_model").show();
+                $("#email_model .modal-body").text("(: "+status+': '+errorinfo);
+            },
+            timeout:5000
+        });
+    });
+</script>

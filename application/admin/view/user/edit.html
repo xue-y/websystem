@@ -1,0 +1,119 @@
+<!--admin 添加角色  表单-->
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<div class="row">
+    <div class="white-box">
+        <p class="text-danger m-l-10">{:lang('pass_empty_info')}</p>
+		<p class="text-danger m-l-10">{:lang('name_TakeEffect')}</p>
+		
+        <!--<h2 class="header-title">Form Validation</h2>-->
+        <form class="b_from" method="post" action="{:url('update')}">
+            {:token()}
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_name')} <span class="red">*</span></label>
+                <div class=" col-md-10">
+                    <input type="text" class="form-control" name="name" value="{$data.name}"  />
+                </div>
+            </div>
+            {present name='is_notedit'}
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_oldpass')} </label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="oldpass"  autocomplete="off" />
+                </div>
+            </div>
+            {/present}
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_pass')} </label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="pass"  autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user_pass2')}</label>
+                <div class=" col-md-10">
+                    <input type="password" class="form-control" name="pass2" autocomplete="off" />
+                </div>
+            </div>
+            {notpresent name='is_notedit'}
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('role')} <span class="red">*</span></label>
+                <div class=" col-md-10">
+                    <select name="r_id" class="form-control">
+                        <option>{:lang('role_select')}</option>
+                        {foreach $role as $k=>$v }
+                        {eq name='data.r_id' value='$k'}
+                        <option value="{$k}" selected>{$v}</option>
+                        {else/}
+                        <option value="{$k}">{$v}</option>
+                        {/eq}
+                        {/foreach}
+                    </select>
+                </div>
+            </div>{/notpresent}
+
+            <div class="form-group">
+                <label class="col-md-2"></label>
+                <div class="col-md-10" >
+                    <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                    &nbsp;  &nbsp; &nbsp;
+                    <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!--表单验证插件-->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>
+<script>
+    //父级选中 自动选中子级，同时选中自己的父级
+    $('input[type="checkbox"]').change(function(e) {
+        var checked = $(this).prop("checked"),
+            container = $(this).parent(),
+            siblings = container.siblings();
+
+        container.find('input[type="checkbox"]').prop({
+            indeterminate: false,
+            checked: checked
+        });
+
+        function checkSiblings(el) {
+
+            var parent = el.parent().parent(),
+                all = true;
+
+            el.siblings().each(function() {
+                return all = ($(this).children('input[type="checkbox"]').prop("checked") === checked);
+            });
+
+            if (all && checked) {
+
+                parent.children('input[type="checkbox"]').prop({
+                    indeterminate: false,
+                    checked: checked
+                });
+
+                checkSiblings(parent);
+
+            } else if (all && !checked) {
+
+                parent.children('input[type="checkbox"]').prop("checked", checked);
+                parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find('input[type="checkbox"]:checked').length > 0));
+                checkSiblings(parent);
+
+            } else {
+
+                el.parents("li").children('input[type="checkbox"]').prop({
+                    indeterminate: true,
+                    checked: false
+                });
+            }
+        }
+        checkSiblings(container);
+    });
+</script>

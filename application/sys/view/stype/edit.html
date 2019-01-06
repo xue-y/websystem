@@ -1,0 +1,32 @@
+{include file="static/back/postion_nav.html" /}
+<!--系统设置 表单-->
+<div class="row b_from">
+        <div class="white-box">
+             <form method="post" action="{:url('update')}">
+                 {:token()}
+             {foreach $data as $k=>$v}
+             <div class="form-group">
+                <label class="col-md-2 control-label">
+                    <span style="vertical-align: inherit;">
+                    {:lang('sys_stype')['systype']}: </span>
+                </label>
+                <div class="col-md-9">
+                    <input class="form-control" placeholder="第1个" type="text" name="id[{$v['id']}]" value="{$v.systype}">
+                </div>
+             </div>
+             {/foreach}
+
+             <div class="form-group">
+                     <label class="col-md-2"></label>
+                     <div class="col-md-10" >
+                         <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                         &nbsp;  &nbsp; &nbsp;
+                         <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+                     </div>
+                 </div>
+
+            </form>
+        </div>
+</div>
+{include file="static/back/com_js.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>

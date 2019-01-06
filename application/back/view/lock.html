@@ -1,0 +1,106 @@
+<body>
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+</style>
+<!--Start login Section-->
+<section class="login-section all_full_bg">
+    <div class="container">
+        <div class="row">
+            <div class="login-wrapper">
+                <div class="login-inner">
+                    <h2 class="header-title text-center">{$name} ，{:lang('welcome_back')}</h2>
+
+                    <form class="b_from">
+                        {:token()}
+                        <div class="form-group m-t-20">
+                            <label class="m-b-10">{$Think.lang.unlock_screen}</label>
+                            <div class="col-md-12 p-0">
+                                <input type="password" class="form-control"  autocomplete="off" placeholder="" name="repass">
+                            </div>
+                        </div>
+
+                        <div class="form-group  m-t-15">
+                            <div class="pull-left">
+                                <div class="primary">
+                                    <a href="{:url('pub/Login/out')}" class="a-link">
+                                        <i class="icon-logout"></i> {$Think.lang.login_out}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="pull-right">
+                                <a href="{:url('pub/Pass/index')}" class="a-link">
+                                    <i class="fa fa-unlock-alt"></i> {$Think.lang.pub_pass}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-group  m-t-20">
+                            <input type="submit" value="{$Think.lang.unlock}" class="btn btn-primary btn-block" >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End login Section-->
+<div  id="modal-small" class="modal  p-0" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h4 class="modal-title"> {$Think.lang.lock_error}</h4>
+            </div>
+            <div class="modal-body text-danger">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{$Think.lang.close}</button>
+            </div>
+        </div>
+    </div>
+</div><!--模态框 end -->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<script>
+    $("input[type='submit']").click(function (e) {
+        e.preventDefault();
+        if($("input[type='password']").val()=='')
+        {
+            $("input[type='password']").focus();
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"{:url('unlock')}",
+            data:$('.b_from').serialize(),
+            success: function(data,status,xhr){
+                if(data=='ok')
+                {
+                    // 或者1 跳转到后台首页 ,2 是原历史记录页面
+                   //  window.location.href=window.history.back(-1);
+                    window.location.href='{:url($Think.config.back_default_index)}'
+                }else
+                {
+                    if(data.msg.token)
+                    {
+                        $("input[name='__token__']").val(data.msg.token);
+                    }
+                    $("#modal-small").show();
+                    $("#modal-small .modal-body").text(data.msg.error);
+                }
+            },
+            error: function(xhr,status,errorinfo){
+               // console.log(xhr.responseText)
+                $("#modal-small").show();
+                $("#modal-small .modal-body").text("(: "+status+': '+errorinfo);
+            },
+            timeout:3000
+        });
+        return false;
+    });
+
+</script>

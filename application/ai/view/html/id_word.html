@@ -1,0 +1,48 @@
+{include file="ai@html/head" /}
+<link href="{$Think.config.home_css}img_word.css" rel="stylesheet">
+    <div class="bg-info">
+        操作说明，上传图片大小不得超过 {$img_size} MB<br/>
+        图片文件格式：{$img_type}<br/>
+    </div>
+    <form enctype="multipart/form-data" method="post" >
+
+        <div class="m-t-30">
+            <label class="radio-inline">
+                <input type="radio" value="front" name="id_card_side">正面身份证
+            </label>
+            <label class="radio-inline">
+                <input type="radio" value="back" name="id_card_side">反面身份证
+            </label>
+        </div>
+
+        <div class="clearfix" style="margin:30px auto" >
+            <div class="col-md-6 warp-img" style="border: 1px solid #dadada;color: #838383;">
+                <img src="" title="点击预览大图"><br/>
+                <a class="btn btn-default button" data-toggle="modal" data-target="#modal-large" href="#" role="button">
+                    <i class="fa fa-search"></i> 点击预览大图
+                </a>
+            </div>
+            <div  class="col-md-6 p-0 warp_btu">
+                <div class="row">
+                    <div class="col-xs-6 filePicker btn-h-40">
+                        <label class="btn-h-40">点击上传图片</label>
+                        <input type="file" class="file" name="file" value="">
+                    </div>
+                    <div class="col-xs-6 text-right"  style="z-index: 2">
+                        <button type="button" class="btn btu-upload btn-h-40" disabled >确认提取</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control " id="textarea"></textarea>
+        </div>
+        <div class="form-group m-t-20">
+              <button type="button" class="btn btn-info btn-lg reset" disabled >清空文本</button>
+              <button class="btn btn-success btn-lg" type="button" data-clipboard-action="copy" data-clipboard-target="#textarea" disabled
+                  data-toggle="tooltip"  data-placement="top"  >复制内容</button>
+        </div>
+    </form>
+<script src="{$Think.config.home_js}id_word.js"></script>
+{include file="ai@html/foot" /}

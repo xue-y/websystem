@@ -1,0 +1,83 @@
+{include file="static/back/postion_nav.html" /}
+<!--权限 有下级 的列表-->
+<style>
+   .a_btn a{ margin-bottom: 10px;}
+</style>
+
+ <!-- Start responsive Table-->
+ <div class="white-box">
+     <form method="post">
+         {:token()}
+         <div class="form-group a_btn">
+             <a class="btn btn-primary outline-btn add"  href="{:url('create')}"><i class="icon icon-plus"></i>&nbsp;
+                 <span>{:lang('create')}</span>
+             </a>
+             <a class="btn btn-del outline-btn"  onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')"   title="{:lang('power_del_alter')}">
+                 <i class="fa fa-trash-o"></i>
+                 <input type="button" value="{:lang('delete')}">
+             </a>
+             <a class="btn btn-refresh outline-btn" id="sort">
+                 <i class="icon icon-refresh"></i> &nbsp;
+                 <input type="button" value="{:lang('update_sort')}"  data-href="{:url('sort')}">
+             </a>
+             <span class="text-info text-nowrap">{:lang('menu_sort')}</span>
+         </div> <div class="clearfix"></div>
+
+     <div class="table-responsive">
+         <table class="table table-bordered table-hover no-table">
+          <thead>
+            <tr>
+              <th width="10%"><input type="checkbox"> </th>
+              <th>ID</th>
+              <th>{:lang('admin_power')['mc_name']}</th>
+              <th>{:lang('admin_power')['biaoshi_name']}</th>
+              <th>{:lang('sort')}</th>
+              <th>{:lang('operation')}</th>
+            </tr>
+          </thead>
+          <tbody>
+          {foreach $list as $v}
+            <tr>
+              <td><input type="checkbox" value="{$v.id}" name="id[]"></td>
+              <td class="id">{$v.id}</td>
+              <td class="text-left p-l-10-bi ">{$v.mc_name}</td>
+              <td class="text-left p-l-10-bi ">{$v.biaoshi_name}</td>
+              <td class="sort"><span>{$v.sort}</span> <a style="cursor: pointer"><i class="fa fa-edit text-warning"></i></a></td>
+              <td>
+                    <a href="{:url('create',['pid'=>$v.id])}"><i class="fa  fa-plus-square-o text-info"></i></a>
+                    <a href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
+                  {neq name='v.is_sys' value='$Think.config.sys_val_inner'}
+                    <a data-href="{:url('delete',['id'=>$v.id])}"  title="{:lang('power_del_alter')}" onclick="del($(this))" class="fa fa-trash-o text-danger"></a>
+                  {/neq}
+              </td>
+              </td>
+            </tr>
+          {/foreach}
+           </tbody>
+        </table>
+     </div>
+   </form>
+ </div>
+
+<!-- End responsive Table-->
+{include file="static/back/com_js.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>
+<link href="{$Think.config.back_plus}datatables/datatables.css" rel="stylesheet">
+<script src="{$Think.config.back_plus}datatables/datatables.js"></script>
+<script>
+    $('table').DataTable( {
+        "ordering": false, //关闭表格的排序功能
+        "sPaginationType": "full_numbers", // 分页样式
+        stateSave: true, //打开状态保存
+        "language": {
+            "url": "/static/back/plugins/datatables/zh_CN.json"
+        },
+        //根据Datatables的实例id来读取和储存页面上保存的状态:
+        stateSaveCallback: function(settings,data) {
+            localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
+        },
+        stateLoadCallback: function(settings) {
+            return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
+        }
+    } );
+</script>

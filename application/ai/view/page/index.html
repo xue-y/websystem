@@ -1,0 +1,61 @@
+<!--普通列表-->
+{include file="static/back/postion_nav.html" /}
+ <!-- Start responsive Table-->
+         <div class="white-box">
+           <form  method="post">
+               {:token()}
+               <div class="form-group">
+                   <a class="btn btn-primary outline-btn add"  href="{:url('create')}"><i class="icon icon-plus"></i>&nbsp;
+                      <span>{:lang('create')}</span>
+                   </a>
+                   <a class="btn btn-del outline-btn"  onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+                       <i class="fa fa-trash-o"></i>
+                       <input type="button" value="{:lang('deletes')}">
+                   </a>
+                   <a class="btn btn-refresh outline-btn" id="sort"><i class="icon icon-refresh"></i>&nbsp;
+                       <input type="button" value="{:lang('update_sort')}"  data-href="{:url('sort')}" >
+                   </a>
+               </div> <div class="clearfix"></div>
+
+             <div class="table-responsive">
+                 <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th width="15%"><input type="checkbox"> </th>
+                      <th>ID</th>
+                      <th>{:lang('ai_page')['tit']}</th>
+                      <th>{:lang('sort')}</th>
+                      <th>{:lang('operation')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {foreach $list as $k=>$v }
+                    <tr>
+                      <td><input type="checkbox" value="{$v.id}" name="id[]"></td>
+                      <td class="id">{$v.id}</td>
+                      <td>{$v.tit}</td>
+                      <td class="sort"><span>{$v.sort}</span> <a style="cursor: pointer"><i class="fa fa-edit text-warning"></i></a></td>
+                      <td>
+                          <a href="{:url('Html/html_page',['id'=>$v.id])}" target="_blank" >
+                              <i class="fa icon-eye text-info"></i>
+                          </a>
+                          <a href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
+                          <a data-href="{:url('delete',['id'=>$v.id])}"  onclick="del($(this))">
+                              <i  class="fa fa-trash-o text-danger"></i>
+                          </a>
+                      </td>
+                    </tr>
+                  {/foreach}
+                   </tbody>
+                </table>
+             </div>
+           </form>
+         </div>
+      <!--  page-->
+       <!-- End responsive Table-->
+
+<!--End main content -->
+{include file="static/back/com_js.html" /}
+<link href="{$Think.config.back_plus}datatables/datatables.css" rel="stylesheet">
+<script src="{$Think.config.back_plus}datatables/datatables.js"></script>
+<script src="{$Think.config.back_js}arc_list.js"></script>

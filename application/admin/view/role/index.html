@@ -1,0 +1,52 @@
+<!--普通列表-->
+{include file="static/back/postion_nav.html" /}
+ <!-- Start responsive Table-->
+         <div class="white-box">
+           <form method="post">
+               {:token()}
+               <div class="form-group">
+                   <a class="btn btn-primary outline-btn add"  href="{:url('create')}"><i class="icon icon-plus"></i>&nbsp;
+                      <span>{:lang('create')}</span>
+                   </a>
+                   <a class="btn btn-del outline-btn" onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+                       <i class="fa fa-trash-o"></i>
+                       <input type="button" value="{:lang('deletes')}"  >
+                   </a>
+               </div> <div class="clearfix"></div>
+
+             <div class="table-responsive">
+                 <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th width="15%"><input type="checkbox"> </th>
+                      <th>ID</th>
+                      <th>{:lang('admin_role')['r_n']}</th>
+                      <th>{:lang('operation')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {foreach $list as $k=>$v }
+                    <tr>
+                      <td><input type="checkbox" value="{$k}" name="id[]"></td>
+                      <td class="id">{$k}</td>
+                      <td>{$v}</td>
+                      <td> <a href="{:url('edit',['id'=>$k])}" ><i class="fa fa-edit text-warning"></i></a>
+                          {neq name='all_rid' value='$k'}
+                          <a data-href="{:url('delete',['id'=>$k])}"  onclick="del($(this))">
+                              <i  class="fa fa-trash-o text-danger"></i>
+                          </a>
+                          {/neq}
+                      </td>
+                    </tr>
+                  {/foreach}
+                   </tbody>
+                </table>
+             </div>
+           </form>
+         </div>
+       <!-- End responsive Table-->
+<!--End main content -->
+{include file="static/back/com_js.html" /}
+<link href="{$Think.config.back_plus}datatables/datatables.css" rel="stylesheet">
+<script src="{$Think.config.back_plus}datatables/datatables.js"></script>
+<script src="{$Think.config.back_js}arc_list.js"></script>

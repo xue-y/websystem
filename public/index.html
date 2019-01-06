@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智能小工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/icons.css" rel="stylesheet">
+    <link href="/static/home/css/com.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/home/js/clipboard.min.js"></script>
+    <script src="/static/home/js/com.js"></script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only"></span>
+                <i class="fa fa-bars nav_bar"></i>
+            </button>
+                        <a class="navbar-brand" href="/">智能小工具</a>
+                        <span class="nav navbar-nav navbar-right navbar-m">
+    		<a href="https://www.cnblogs.com/xuey/">博客</a>
+    	</span>
+        </div>
+
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                            <li   class="active"   >
+                                <a href="/nav/27.html">图片提取文字</a>
+                                </li>
+                             <li   >
+                                <a href="/nav/30.html">网络图片提取文字</a>
+                                </li>
+                             <li   >
+                                <a href="/nav/28.html">票据识别</a>
+                                </li>
+                             <li   >
+                                <a href="/nav/25.html">证件号码识别</a>
+                                </li>
+                             <li   >
+                                <a href="/nav/31.html">身份证识别</a>
+                                </li>
+                             <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        单页文档 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                                                <li>
+                                                        <a href="/page/17.html">测试文章2</a>
+                                                    </li>
+                                                <li>
+                                                        <a href="/page/14.html">测试文章</a>
+                                                    </li>
+                                                <li>
+                                                        <a href="/page/18.html">修改测试文章</a>
+                                                    </li>
+                                                <li>
+                                                        <a href="/page/19.html">网站介绍</a>
+                                                    </li>
+                                                <li>
+                                                        <a href="/page/20.html">ai 介绍</a>
+                                                    </li>
+                                            </ul>
+                </li>
+                            </ul>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right navbar-pc">
+            <li> <a href="https://www.cnblogs.com/xuey/">博客</a></li>
+        </ul>
+
+    </div>
+</nav>  <!--导航结束-->
+<div class="container">
+<link href="/static/home/css/img_word.css" rel="stylesheet">
+    <div class="bg-info">
+        操作说明，上传图片大小不得超过 4 MB<br/>
+        图片文件格式：PNG,JPG,JPEG,BMP<br/>
+    </div>
+
+    <form enctype="multipart/form-data" method="post" >
+      <div class="clearfix" style="margin:30px auto" >
+          <div class="col-md-6 warp-img" style="border: 1px solid #dadada;color: #838383;">
+              <img src="" title="点击预览大图"><br/>
+              <a class="btn btn-default button" data-toggle="modal" data-target="#modal-large" href="#" role="button">
+                  <i class="fa fa-search"></i> 点击预览大图
+              </a>
+          </div>
+          <div  class="col-md-6 p-0 warp_btu">
+              <div class="row">
+                  <div class="col-xs-6 filePicker btn-h-40">
+                        <label class="btn-h-40">点击上传图片</label>
+                        <input type="file" class="file" name="file" value="">
+                  </div>
+                  <div class="col-xs-6 text-right"  style="z-index: 2">
+                      <button type="button" class="btn btu-upload btn-h-40" disabled >确认提取</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <textarea class="form-control " id="textarea"></textarea>
+      </div>
+        <div class="form-group m-t-20">
+              <button type="button" class="btn btn-info btn-lg reset" disabled >清空文本</button>
+              <button class="btn btn-success btn-lg" type="button" data-clipboard-action="copy" data-clipboard-target="#textarea" disabled
+                  data-toggle="tooltip"  data-placement="top"  >复制内容</button>
+        </div>
+    </form>
+<script src="/static/home/js/index.js"></script>
+</div> <!--中间内容区-->
+
+<!--模态框 start 预览大图 -->
+<div id="modal-large" class="modal fade p-0" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body" >
+                <img src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div><!--模态框 end -->
+
+<div class="modal" id="load_img">
+    <i class="fa-4x fa fa-spin fa-spinner text-info"></i><!--图片上传加载load-->
+
+    <div id="alert" class="alert-warning alert-dismissible p-15 hidden" role="alert">
+        <i class="fa fa-warning "></i> <span></span>
+    </div><!--提醒框-->
+</div>
+
+
+<div class="panel-footer">
+    <span  class="text-center">个人学习交流网站<br/>有问题请联系 <a href="https://mail.qq.com">php.develop@qq.com</a></span>
+</div><!--底部结束-->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

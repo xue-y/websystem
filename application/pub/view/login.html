@@ -1,0 +1,106 @@
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+    .modal{transition: all ease-in 2s;}
+</style>
+<body>
+ <!--Start login Section-->
+  <section class="login-section all_full_bg">
+       <div class="container">
+           <div class="row">
+               <div class="login-wrapper">
+                   <div class="login-inner">
+                   		<h2 class="header-title text-center">{$Think.lang.pub_login}</h2>
+
+                       <form class="b_from" action="{:url('Login/sign')}" method="post">
+                           {:token()}
+                           <div class="form-group m-t-20">
+        <input type="text" class="form-control"   name="name" value='{present name="name"}{$name}{/present}' >
+                           </div>
+                           
+                           <div class="form-group m-t-15">
+                               <input type="password" class="form-control"  autocomplete="off"  name="repass" >
+                           </div>
+
+                           <div class="form-group v_code m-t-15">
+                               <input type="text" class="form-control"  name="v_code" >
+                               {:captcha_img()}
+                           </div>
+
+                           <div class="form-group  m-t-15">
+                               <div class="pull-left">
+                                <div class="primary">
+                                  <input  id="checkbox-2" type="checkbox" name="re_name" >
+                                  <label for="checkbox-2">{$Think.lang.re_name}</label>
+                                </div>
+                               </div>
+
+                               <div class="pull-right">
+                                   <a href="{:url('pub/Pass/index')}" class="a-link">
+                                   <i class="fa fa-unlock-alt"></i> {$Think.lang.pub_pass}
+                                   </a>
+                               </div>
+                         </div>
+                          
+                           <div class="form-group m-t-20">
+                               <input type="submit" value="{$Think.lang.pub_login}" class="btn btn-primary btn-block" >
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+  </section>
+ <!--模态框 start -->
+
+ {notempty name="user_down_info"}
+ <div  class="modal  p-0" role="dialog" style="display: block;">
+     <div class="modal-dialog modal-sm">
+         <!-- Modal content-->
+         <div class="modal-content text-center">
+             <div class="modal-header">
+                 <h4 class="modal-title"> {$Think.lang.user_down_info}</h4>
+             </div>
+             <div class="modal-body text-danger">
+                 {:lang('user_down_con',['<br/>','<br/>'])}
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">{$Think.lang.close}</button>
+             </div>
+         </div>
+     </div>
+ </div><!--模态框 end -->
+ {/notempty}
+
+ <!--模态框 start -->
+ {notempty name="user_login_fail"}
+ <div  class="modal  p-0" role="dialog" style="display: block;">
+     <div class="modal-dialog modal-sm">
+         <!-- Modal content-->
+         <div class="modal-content text-center">
+             <div class="modal-header">
+                 <h4 class="modal-title"> {$Think.lang.user_login_fail}</h4>
+             </div>
+             <div class="modal-body text-danger">
+                 {$Think.lang.user_login_con}
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">{$Think.lang.close}</button>
+             </div>
+         </div>
+     </div>
+ </div><!--模态框 end -->
+ {/notempty}
+
+ {include file="static/back/com_js.html" /}
+ {include file="static/back/foot_form.html" /}
+ <script>
+     // 点击切换 验证码图片
+  $(".v_code img").click(function () {
+      var src=$(this).attr("src");
+      src = src.split("?");
+      src=src.shift();
+      $(this).attr("src",src+'?'+Math.random())
+  });
+ </script>

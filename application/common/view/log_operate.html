@@ -1,0 +1,134 @@
+<!--管理员操作记录表-->
+{include file="static/back/postion_nav.html" /}
+<!--Start row-->
+<style>
+    .panel-title span{display: block;  float: left; width:19%;  white-space: nowrap;}
+    .panel-title span:first-child{margin-left:10px; width: 10% }
+    .panel-title span:last-child{ text-align: right;}
+    .input-daterange input{width:40%; display: inline}
+    .form-group [class^="col-md"],.form-group [class^="col-md"] select,.form-group [class^="col-md"] input,.form-group [class^="col-md"] span{ height: 40px;}
+    @media screen and (max-width: 1100px) {
+        .form-group .col-md-5,.form-group .col-md-4{ padding: 0px !important; margin-bottom: 5px;}
+    }
+    @media screen and (max-width: 500px) {
+        .panel-title span{ width: auto; margin-right: 4%;}
+    }
+    a[data-toggle="collapse"]::before {
+        content: '\f107';
+        font-family: 'FontAwesome';
+        font-size: 18px;
+        text-align: right;
+    }
+</style>
+<div class="white-box">
+     <form class="table-responsive m-b-0" method="get">
+
+        <div class="form-group">
+
+                <button class="btn btn-white m-b-5" id="list_all"  style="box-shadow: none;" title="{:lang('log_list')}">
+                    {:lang('log_data_c')}{$count} / {:lang('log_page_c',[$page_num])}
+                </button>
+
+                <div class="input-daterange " id="date-range">
+                    <input type="text" class="form-control" name="start"  autocomplete="off"  placeholder="{$start_t}" >
+                    <span class="input-group-addon no-border text-white" >to</span>
+                    <input type="text" class="form-control" name="end"   autocomplete="off" placeholder="{$end_t}">
+                </div>
+
+              <div class="f-left m-b-5">
+              {empty name="uid"}
+                <select name="name"  class=" form-control h-40"   style="width:170px;display: inline" >
+                    <option value="">{$n_search}</option>
+                    {foreach $name as $k=>$v }
+                    <option value="{$k}">{$v}</option>
+                    {/foreach}
+                </select>
+              {/empty}
+                <select name="behavior"  class=" form-control h-40"   style="width:170px; display: inline">
+                    <option value="">{$b_search}</option>
+                    {foreach $behavior as $k=>$v }
+                    <option value="{$k}">{$v}</option>
+                    {/foreach}
+                </select>
+                </div>
+                <input type="submit" id="search"  class=" btn btn-primary"  value="{:lang('search')}">
+            </div>
+
+        <a class="btn btn-del outline-btn m-b-15" onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+            <i class="fa fa-trash-o"></i>
+            <input type="button" value="{:lang('deletes')}"  >
+        </a>
+
+        <table class="table no-table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th width="15%">
+                        <input type="checkbox" >
+                    </th>
+                    <th>{:lang('log_name')}</th>
+                    <th>{:lang('log_operate')['behavior']}</th>
+                    <th>{:lang('log_operate')['t']}</th>
+                    <th>{:lang('operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $list as $v }
+                <tr>
+                    <td>
+                        <input type="checkbox" name="id[]" value="{$v.id}">
+                    </td>
+                    <td>
+                        {present name="$name[$v.uid]"}
+                        {$name[$v.uid]}
+                        {else /}
+                        {:lang('log_user_del',[$v.uid])}
+                        {/present}
+                    </td>
+                    <td>{$behavior[$v.behavior]}</td>
+                    <td>{$v.t} </td>
+                    <td>
+                        <a class="collapsed"  data-toggle="collapse"
+                           data-parent="#accordion" data-target="#{$v.id}">
+                        </a>
+                        <a data-href="{:url('delete',['id'=>$v.id])}"  onclick="del($(this),'{:lang(\'delete\')}')">
+                            <i class="fa fa-trash-o text-danger"></i>
+                        </a></td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="border:none; padding: 0px;">
+                        <div id="{$v.id}"  class="panel-collapse collapse" style="border-top:1px solid #ddd">
+                            <div class="panel-body">
+                                <p>{$v.details}
+                                </p>
+                            </div></div>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+    </form>
+
+    <nav aria-label="Page navigation" class="text-center">
+        {$list|raw}
+    </nav>
+
+</div>
+<!--End row-->
+{include file="static/back/com_js.html" /}
+<script src="{$Think.config.back_js}arc_list.js"></script>
+<link href="/static/back/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"><!--时间-->
+<script src="/static/back/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script>
+    // 时间插件
+    jQuery('#date-range').datepicker({
+     //   toggleActive: true,
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        // language: 'cn',
+        todayHighlight: true,
+        // 默认显示当天
+        setDate: new Date(),
+        clearBtn: true, //添加清除按钮
+    });
+	
+</script>

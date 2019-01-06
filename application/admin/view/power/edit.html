@@ -1,0 +1,82 @@
+{include file="static/back/postion_nav.html" /}
+<!--admin 修改权限 表单-->
+<!--Start row-->
+<div class="row">
+   <div class="col-md-12">
+       <div class="white-box">
+       <!--<h2 class="header-title">Form Validation</h2>-->
+           <form class="b_from" method="post" action="{:url('update')}">
+               {:token()}
+               <input  type="hidden" value="{$data.id}" name="id">
+               {eq name='data.is_sys' value='$Think.config.sys_val_inner'}
+               <input type="hidden" value="-1" name="pid">
+               {else/}
+               <div class="form-group">
+                   <label class="col-md-2 control-label">{:lang('admin_power')['pid']} <span class="red">*</span> </label>
+                   <div class="col-md-10">
+                       <select class="form-control" name="pid">
+                               <option value="0">-- {:lang('top_power')} --</option>
+                               {foreach $list as  $v}
+                               {eq name="data.pid" value="$v.id"}
+                               <option value="{$v.id}-{$v.mc_name}" selected>{$v.biaoshi_name}</option>
+                               {else/}
+                               <option value="{$v.id}-{$v.mc_name}">{$v.biaoshi_name}</option>
+                               {/eq}
+                               {/foreach}
+                       </select>
+                   </div>
+               </div>
+               {/eq}
+
+               <div class="form-group" >
+                   <label class="col-md-2  control-label">{:lang('admin_power')['mc_name']} <span class="red">*</span> </label>
+                   <div class=" col-md-10">
+                       {eq name='data.is_sys' value='$Think.config.sys_val_inner'}
+                       <input type="text" class="form-control" readonly value="{$data.mc_name}" name="mc_name" />
+                       {else/}
+                       <input type="text" class="form-control" name="mc_name" value="{$data.mc_name}" />
+                       {/eq}
+                   </div>
+               </div>
+
+               <div class="form-group" >
+                   <label class="col-md-2  control-label">{:lang('admin_power')['biaoshi_name']} </label>
+                   <div class=" col-md-10">
+                       <input type="text" class="form-control" name="biaoshi_name"  value="{$data.biaoshi_name}"/>
+                   </div>
+               </div>
+
+               <div class="form-group" >
+                   <label class="col-md-2  control-label">{:lang('admin_power')['icon']} </label>
+                   <div class=" col-md-10">
+                       <input type="text" class="form-control" name="icon"  value="{$data.icon}" />
+                   </div>
+               </div>
+
+
+               <div class="form-group">
+                   <label for="order" class="col-md-2 control-label">{:lang('sort')}</label>
+                   <div class="col-md-10">
+                       <input type="number" class="form-control" id="order" min="1" value="{$data.sort}" name="sort">
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <label class="col-md-2"></label>
+                   <div class="col-md-10" >
+                       <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                       &nbsp;  &nbsp; &nbsp;
+                       <input onclick="javascript :history.back(-1)"  class="btn btn-info" value="{:lang('url_back')}" style="width: 100px;">
+                   </div>
+               </div>
+
+           </form>
+       </div>
+    </div>
+</div>
+ <!-- end row -->
+
+<!--表单验证插件-->
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>

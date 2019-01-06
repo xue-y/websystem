@@ -1,0 +1,57 @@
+{include file="static/back/head.html" /}
+<body>
+<style>
+    body{ line-height:2em;}
+    h1{ margin-top: 0;}
+    #modal-normal {
+        top: 0; text-align: center;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+    }
+</style>
+<!--模态框 start -->
+<div id="modal-normal" class="fade in  p-0" role="dialog" style="display: block;background: none">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> {$Think.lang.prompt_message}</h4>
+            </div>
+            <div class="modal-body">
+                <?php switch ($code) {?>
+                <?php case 1:?>
+                <h1 class="text-info">:)</h1>
+                <h4 class="success"><?php echo(strip_tags($msg));?></h4>
+                <?php break;?>
+                <?php case 0:?>
+                <h1 class="text-danger">:(</h1>
+                <h4 class="error"><?php echo(strip_tags($msg));?></h4>
+                <?php break;?>
+                <?php } ?>
+
+               <h4 class="m-t-20">
+                   {$Think.lang.page_auto} <a id="href" href="<?php echo($url);?>">{$Think.lang.jump}</a> ： <b id="wait"><?php echo($wait);?></b></h4>
+            </div>
+        </div>
+    </div>
+</div><!--模态框 end -->
+<script type="text/javascript">
+    (function(){
+       var wait = document.getElementById('wait'),
+            href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

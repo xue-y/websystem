@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <link href="../css/icons.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/com.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../webuploader/webuploader.css" />
+  <link rel="stylesheet" type="text/css" href="../webuploader/file_upload.css" />
+    
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid"> 
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <i class="fa fa-bars nav_bar"></i>
+        </button>
+        <a class="navbar-brand" href="#">智能小工具</a>
+        
+        <span class="nav navbar-nav navbar-right navbar-m">
+    		<a href="#">登录</a>
+        	<a href="#">注册</a> 
+    	</span><!--如果用户已经登录改为个人中心-->
+       
+    </div>
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">图像提取文字</a></li>
+            <li><a href="#">语言转换文字</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Java <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">jmeter</a></li>
+                    <li><a href="#">EJB</a></li>
+                    <li><a href="#">Jasper Report</a></li>
+                    <li><a href="#">分离的链接</a></li>
+                    <li><a href="#">另一个分离的链接</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <ul class="nav navbar-nav navbar-right navbar-pc">
+        <li><a href="#">登录</a></li>
+        <li><a href="#">注册</a></li>
+    </ul> <!--如果用户已经登录改为个人中心-->
+    
+   </div>
+</nav>  <!--导航结束-->
+
+<div class="container">
+    <div class="bg-info p-15">
+        操作说明，一次最多上传 10 个文件， 单个文件最大不得超过 4MB， 总文件大小不得超过 40MB<br/>
+        图片文件格式：gif,jpg,jpeg,bmp,png<br/>
+        音频文件格式：mp3,wma,wav<br/>
+    </div>
+	<div id="wrapper">
+        <div id="container">
+            <!--头部，相册选择和格式选择-->
+            <div id="uploader">
+                <div class="queueList">
+                    <div id="dndArea" class="placeholder">
+                        <div id="filePicker"></div>
+                        <!--../webuploader/file_upload.js 文件中修改上传文件个数类型大小-->
+                        <p>或将图片/文件拖到这里单次最多可选20个文件</p>
+                    </div>
+                </div>
+                <div class="statusBar" style="display:none;">
+                    <div class="progress">
+                        <span class="text">0%</span>
+                        <span class="percentage"></span>
+                    </div><div class="info"></div>
+                    <div class="btns">
+                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                    </div>
+                </div>
+            </div>
+            <!--文件上传-->
+        </div>
+    </div>
+    <!--可以添加其他内容-->
+</div> <!--中间内容区-->
+
+<div class="panel-footer">
+    <p>精美而实用的网站，关注编程技术，追求极致，让您轻松愉快的学习。<br/>
+    Copyright ©2011-2015 biancheng.net, All Rights Reserved，陕ICP备15000209号</p>
+</div><!--底部结束-->
+
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../webuploader/webuploader.min.js"></script>
+<!--文件中限制了文件类型与文件个数，文件大小-->
+<script type="text/javascript" src="../webuploader/file_upload.js"></script>
+<script src="js/com.js"></script>
+</body>
+</html>

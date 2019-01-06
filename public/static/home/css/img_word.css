@@ -1,0 +1,30 @@
+.warp_btu{ transition: all ease-out 1s;}
+.filePicker .file,.filePicker label{ position: absolute;
+    top: 0px;
+    height: 100%;
+    overflow: hidden;	cursor: pointer;
+    bottom: auto;
+    right: auto;}
+.filePicker .file{
+    opacity: 0;	z-index: 100;   display: inline;width:130px;
+}
+.filePicker label,button.btu-upload{ z-index: 90;
+    font-size: 16px;
+    border-radius: 3px;
+    font-weight: normal;
+    color: #fff;
+    background: #00b7ee;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+button.btu-upload{display: none;}
+
+.warp-img{
+    height: 300px; display:none;overflow: hidden; text-align: center;}
+.warp-img img{
+    max-height: 215px; max-width:100%; margin: 15px auto; cursor: pointer; }
+
+@media (max-width: 767px) {
+    .warp-img{
+        height:200px;}
+    .warp-img img{max-height: 125px;}
+}

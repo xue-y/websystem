@@ -1,0 +1,135 @@
+<body class="all_full_bg">
+
+<div class="container install" >
+    <div class="row" >
+        <h3 class="text-center">{$Request.param.view_tit}</h3>
+
+        <form class="b_from m-t-30" >
+            <div class="form-group">
+                <p class="col-md-7 text-danger">
+                    {:lang('explain',['<br/>','<br/>','<br/>',$Think.config.default_pass])}
+                </p>
+                <label class="control-label col-md-2" style="text-align: right">{$Think.lang.lang}：</label>
+                <div class="col-md-3">
+                <select class="form-control " name="lang"> <!-- 从配置文件中取得，语言数组 -->
+                    <option value="zh-CN"  selected >简体中文</option>
+                    <option value="en_US">English</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="host" class="col-md-2 control-label">{$Think.lang.host}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="host" name="host" placeholder="127.0.0.1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="port" class="col-md-2 control-label">{$Think.lang.port}： </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control"  id="port" name="port" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dbuser" class="col-md-2 control-label">{$Think.lang.dbuser}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="dbuser" name="dbuser" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dbpass" class="col-md-2 control-label">{$Think.lang.dbpass}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="dbpass" name="dbpass" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dbname" class="col-md-2 control-label">{$Think.lang.dbname}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="dbname" name="dbname" placeholder="">
+                </div>
+            </div>
+            <input  type="hidden" name="table" class="table_data" value="0">
+			
+            <div class="form-group">
+                <label for="prefix" class="col-md-2 control-label">{$Think.lang.prefix}： </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="prefix" name="prefix" placeholder="" value="w">
+                </div>
+            </div>
+			
+			<div class="form-group">
+                <label for="utf" class="col-md-2 control-label">{$Think.lang.charset}： </label>
+                 <div class="col-md-10 radio m-t-5">
+                    <input type="radio" name="charset" id="gbk" value="gbk">
+                    <label for="gbk"  style="width:65px;">GBK</label>
+                    <input type="radio" name="charset" id="utf" checked value="utf8">
+                    <label for="utf">UTF8</label>
+                     <p style="margin-left: -20px;">{$Think.lang.default_collation}： GBK：gbk_chinese_ci ; UTF8：utf8_general_ci</p>
+                </div>
+            </div>
+
+            <div class="form-group" id="name_v">
+                <label for="name" class="col-md-2 control-label">{$Think.lang.name}： <span class="red">*</span></label>
+
+                <div class="col-md-10">
+                    <input type="text"  class="form-control" id="name" name="name" placeholder="" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pass" class="col-md-2 control-label">{$Think.lang.pass}：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="pass" name="pass" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pass2" class="col-md-2 control-label">{$Think.lang.pass2}： </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="pass2" name="pass2" placeholder="">
+                </div>
+            </div>
+
+            <div class="form-group text-center m-t-10">
+                <input type="submit" value="{$Think.lang.install_submit}"  class="btn btn-success">
+            </div>
+
+        </form>
+
+    </div>
+    </div>
+
+<!--模态框 start -->
+<div id="modal-normal" class="modal p-0" role="dialog">
+    <!-- Modal content-->
+    <i class="fa-4x fa fa-spin fa-spinner text-info"></i>
+
+    <div class="modal-dialog modal-content hidden"> <!--提示信息显示时 兄弟节点隐藏-->
+        <div class="modal-header">
+        <h4 class="modal-title"> {$Think.lang.install_alter}</h4>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">{$Think.lang.close}</button>
+        </div>
+    </div>
+</div><!--模态框 end -->
+
+<div id="json_load" class="modal fade in"><i class="fa-4x fa fa-spin fa-spinner text-info"></i></div>
+
+{include file="static/back/com_js.html" /}
+{include file="static/back/foot_form.html" /}
+<script src="{$Think.config.back_js}install.js"></script>
+<script>
+    //js判断当前浏览器语言类型
+    var lang=window.navigator.language;
+   $("select").find("option").each(function(){
+       if(lang==$(this).val())
+       {
+           $(this).prop('selected',true);
+       }
+   });
+</script>

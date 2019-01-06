@@ -1,0 +1,75 @@
+{include file="ai@html/head" /}
+    <div class="bg-info">
+        操作说明，上传图片大小不得超过 {$img_size} MB<br/>
+        图片文件格式：{$img_type}<br/>
+    </div>
+
+    <form enctype="multipart/form-data" method="post" >
+      <div class="row clearfix m-b-30 m-t-30" >
+          <div  class="col-md-9 m-b-5">
+              <input type="url" name="url" class="form-control btn-h-40" placeholder="请输入网络图片地址">
+          </div>
+          <div class="col-md-1">
+                <button type="reset" class="btn btn-default btn-h-40 " >清空</button>
+          </div>
+          <div class="col-md-2 text-right">
+              <button type="button"  class="btn btn-h-40 btu-upload">提交提取</button>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <textarea class="form-control " id="textarea"></textarea>
+      </div>
+        <div class="form-group m-t-20">
+            <button type="button" class="btn btn-info btn-lg reset" disabled >清空文本</button>
+            <button class="btn btn-success btn-lg" type="button" data-clipboard-action="copy" data-clipboard-target="#textarea" disabled
+                  data-toggle="tooltip"  data-placement="top"  >复制内容</button>
+        </div>
+    </form>
+<style>
+    @media (max-width: 991px) {
+        .col-md-1{ display: inline-block;}
+        .col-md-2{ display: inline-block;float: right;}
+    }
+</style>
+<script>
+    // 点击提交
+    $('.btu-upload').click(function() {
+        var img_data =$.trim($("input[name='url']").val());
+
+        // 加载动画
+        $("#load_img").fadeIn(30);
+
+        if(img_data.length < 10)
+        {
+            alter_box('请输入图片网址');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/index/Api/net_word",
+            data:{"url":img_data},
+            success: function (data) {
+              //  console.log(data);
+                if(typeof data=="object")
+                {
+                    $(window).scrollTop($('textarea').offset().top);
+                    copy_text();
+                    $('textarea').val(data.word);
+                }else
+                {
+                    alter_box(data,1500);
+                    return false;
+                }
+            },
+            complete: function () {
+                $("#load_img").fadeOut(50);
+            },
+            error: function (xhr, status, errorinfo) {
+                alter_box(xhr.responseText,3000);
+            }
+        });
+    });
+</script>
+{include file="ai@html/foot" /}
