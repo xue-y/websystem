@@ -20,7 +20,16 @@ $(function () {
 
     //导航点击下拉框
     $('a.dropdown-toggle').click(function(){
-        $('.dropdown>.dropdown-menu').slideToggle();
+        var _this=$(this);
+        $('.dropdown>.dropdown-menu').slideToggle(function(){
+            if(!$('.dropdown>.dropdown-menu').is(':hidden'))
+            {
+                var c_h= $('.navbar-collapse').height();
+                var nav_h=_this.closest('ul').height();
+                var speed=nav_h-c_h;
+                $("#example-navbar-collapse").animate({'scrollTop':speed},speed);
+            }
+        });
     });
 
     // 清空文本
