@@ -74,7 +74,11 @@ class ImgWord
         return $data;
     }
 
-    // 组装数据发送请求
+     /**组装数据发送请求
+     * @param $img_data array 要发送的数据
+     * @param $img_type string 请求的图片类型接口
+     * @return  array 请求回来的数据
+     * */
     public function img_data($img_data,$img_type)
     {
         $token=$this->get_token();
@@ -163,7 +167,7 @@ class ImgWord
             "vat_invoice"=>"增值税发票",
             "receipt"=>"其他/通用票据",// 票据识别
         ];
-        $arr['id']=[
+        $arr['cert']=[
             "driving_license"=>"驾驶证",// 证件号码
             "vehicle_license"=>"行驶证",
             "business_license"=>"营业执照",
