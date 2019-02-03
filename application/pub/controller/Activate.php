@@ -63,14 +63,15 @@ class Activate extends  Controller
 
         $email_type = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
         $smtp = new \Smtp($smtp_server,$smtp_server_port,true,$smtp_user,$smtp_pass);
-        $smtp->debug = false;//是否显示发送的调试信息
+        $smtp->debug = true;//是否显示发送的调试信息,true 显示错误，false 不显示
         $state = $smtp->sendmail($smtp_email_to, $smtp_user_email, $email_title, $email_content, $email_type);
+
         if($state!==true)
         {
             $data['token']=request()->token();
-            $data['error']=lang('email_send_fail');
-            return $data;
-
+           // $data['error']=lang('email_send_fail');
+            $data['error']=$smtp->error_message;
+            return  $data;
         };
 
         // 开始计时---激活邮件有效期
@@ -101,6 +102,7 @@ class Activate extends  Controller
         if(empty($token) || (!session('?email_info_t')))
         {
             $this->error(lang('page_error'),$history_url);
+            exit;
         }
 
         // 取得加密key-- 解密
@@ -110,6 +112,7 @@ class Activate extends  Controller
         if(empty($email_info))
         {
             $this->error(lang('page_error'),$history_url);
+            exit;
         }
 
         //根据行为判断邮件过期跳转地址
@@ -137,6 +140,7 @@ class Activate extends  Controller
         if($email_send_num>$email_send_c)
         {
             $this->error(lang('email_send_c',[$email_send_c,$email_t]),$history_url);
+            exit;
         }
 
         // 写入数据库---成功清除缓存
@@ -148,6 +152,7 @@ class Activate extends  Controller
             // 加密id 值
             session('email_id',crypt_str($u_id,$t));
             $this->redirect('Pass/repass');
+            exit;
         }
 
         //session　删除
@@ -162,6 +167,7 @@ class Activate extends  Controller
         }else
         {
             $this->error(lang('page_error'),$history_url);
+            exit;
         }
 
         // 更新数据
@@ -175,6 +181,7 @@ class Activate extends  Controller
         {
             $this->error(lang($email_info["behavior"]).lang('fail'),$history_url);
         }
+        exit;
     }
 
 }

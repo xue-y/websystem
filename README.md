@@ -67,7 +67,7 @@ php5.6/ php7.0 + Apache/Ngingx 均正常访问，数据库MySql5.5.53，其他�
 下列文件除外（没有使用多语言）
 - public\static\back\js\install.js   
 - public\static\home\js\index.js    
-- ai\html\view\*.html	
+- ai\html\view\*.html  
 
 #### 网站前端（AI模块） 
 生成前端静态页面可以修改 `application/ai/controller/Html` 生成指定路径，默认文件存放位置 public 根目录下  
@@ -81,7 +81,7 @@ Api 接口，请登录注册百度账号 `https://ai.baidu.com/docs#/OCR-API/top
 	('bill_word', '票据识别', '票据识别', '', 3, '1'),
 	('net_work', '网络图片提取文字', '网络图片提取文字', '网络图片提取文字', 2, '1');  
 	
-**注:**  如果百度Api 接口有所变化，需要相应调整 ai 栏目模板页面，api 调用页面 application/index/controller/Api，api 扩展类文件 extend/ImgWord.php  
+**注:**  如果百度Api 接口有所变化，需要相应调整 ai 栏目模板页面，api 调用页面 application/index/controller/Api，api 扩展类文件 extend/ImgWord.php    
 
 
 [ThinkPHP 5.1框架](https://github.com/top-think/think)

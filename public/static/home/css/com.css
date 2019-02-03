@@ -178,7 +178,7 @@ html,body{ min-height:calc(100vh - 90px);min-height:-moz-calc(100vh - 90px);min-
 	font-size: 16px;
 }
 #modal-large .modal-body{ overflow:auto; max-height: 65vh;}
-
+#email_model .modal-body{ overflow:auto; max-height: 200px;}
  @media (max-width: 767px) {
 	/*.container{ margin-bottom:85px;}*/
 	 .dropdown-menu{ width:100%;}

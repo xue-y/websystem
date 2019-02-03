@@ -55,6 +55,8 @@ class Smtp
     public $user;
 
     public $pass;
+	
+	public $error_message='';
 
     /* Private Variables */
     private $sock;
@@ -464,7 +466,8 @@ class Smtp
 
         if ($this->debug) {
 
-            echo $message;
+          //  echo $message;
+		   $this->error_message.=$message.PHP_EOL;
 
         }
 

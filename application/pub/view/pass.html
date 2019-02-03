@@ -30,7 +30,7 @@
                                <i class=" icon-login"></i> {$Think.lang.pub_login}
                            </a>
                            <a href="#" class="email_url f-right text-danger" target="_blank"></a>
-
+						   <p class="p-t-10 email_info hidden text-success">{:lang('email_alter_info')}</p>
                             <div class="form-group  m-t-20">
                                <input type="submit" value="{:lang('email_send')}" class="btn btn-primary btn-block email" >
                            </div>
@@ -123,12 +123,13 @@
             complete:function(){
                 _this.removeAttr('disabled');
                 clearInterval(t);
+				$("p.email_info").removeClass('hidden');
                 btn=false;
                 $('.email').removeAttr('disabled').val("{:lang('email_again_send')}");
             },
             error: function(xhr,status,errorinfo){
                 $("#email_model").show();
-                $("#email_model .modal-body").text("(: "+status+': '+errorinfo);
+                $("#email_model .modal-body").text("(: "+status+': '+errorinfo +'\r\n'+xhr.responseText);
             },
             timeout:5000
         });

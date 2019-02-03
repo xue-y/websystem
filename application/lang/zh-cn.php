@@ -174,5 +174,5 @@ return [
     "email_send_success"=>"进入邮箱",
     "email_expire"=>"邮件已失效，请重新绑定激活",
     "email_send_c"=>"今日发送邮件已达到最大限度 %d 次，请 %d 小时后在继续操作",
-
+    "email_alter_info"=>"如果收件箱没有收到邮件请稍后查看或查看垃圾箱"
 ];
