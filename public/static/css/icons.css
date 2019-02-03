@@ -141,3 +141,4 @@ table,th{  text-align: center;}
 .mailbox-content .checkbox{
     margin-bottom: 0;
 }
+#email_model .modal-body{ overflow:auto; max-height: 200px;}
