@@ -54,13 +54,14 @@ function encry($pass)
 }
 //
 /**数组数据加密解密
+ * @param $secret_name 秘钥名称/标识
  * @param $secret_key 加密秘钥
  * @param $data 加密数据数组值
  * @param $mode 加密方式
  * @param $behavior bool加密TRUE解密FALSE
  * @return  加密void解密返回值
  */
-function my_crypt($secret_key,$data,$mode=null,$behavior=true)
+function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
 {
     switch ($mode)
     {
@@ -68,20 +69,27 @@ function my_crypt($secret_key,$data,$mode=null,$behavior=true)
         case 'mode':
             if($behavior==true)
             {
-               
-                cookie($secret_key,$data[$key]);
+                $k=base64_encode($secret_name,$secret_key);
+			    $v=base64_encode($data[$key],$k);
+                cookie($k,$v);
             }else
             {
-                return cookie($secret_key);
+				$k=base64_encode($secret_name,$secret_key);
+                $v=cookie($k);
+				return base64_decode($v,$k);
             }
         break;
         default:
             if($behavior==true)
             {
-                cookie($secret_key,$data[$key]);
+                $k=base64_encode($secret_name,$secret_key);
+			    $v=base64_encode($data[$key],$k);
+                cookie($k,$v);
             }else
             {
-                return cookie($secret_key);              
+				$k=base64_encode($secret_name,$secret_key);
+                $v=cookie($k);
+				return base64_decode($v,$k);
             }
     }
 }
@@ -91,7 +99,15 @@ function crypt_web_name()
 {
     $n_key=\Crypt\Base64::encrypt("name",config('secret_key'));
     $cookie_prefix_n=config('cookie.cookie_user_n');
-    $n_val=Cookie::get($n_key,$cookie_prefix_n);
+
+	if(Cookie::has($n_key,$cookie_prefix_n))
+    {
+        $n_val=Cookie::get($n_key,$cookie_prefix_n); // 登录是记住用户名
+    }else
+    {
+        $n_val=Cookie::get($n_key); // 登录时没有记住用户名
+    }
+	
     if(empty($n_val))
     {
         return null;

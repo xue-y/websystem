@@ -100,13 +100,13 @@ class Login extends Controller
        $name_key=Base64::encrypt('name',config('secret_key'));
        $name_val=Base64::encrypt($post['name'],$name_key);
 
-       $cookie_prefix_n=config('cookie.cookie_user_n');
        if(isset($post['re_name']))
-       {
+       {	   
+		  $cookie_prefix_n=config('cookie.cookie_user_n');
           cookie($name_key,$name_val,['expire'=>config('cookie.cookie_user_t'),'prefix'=>$cookie_prefix_n]);
         }else
        {
-           cookie($name_key,$name_val,['prefix'=>$cookie_prefix_n]);
+           cookie($name_key,$name_val);
        }
 
         //判断用户是否设置同一账号多个设备登录限制
@@ -150,10 +150,9 @@ class Login extends Controller
     //TODO 管理员退出
    public function out()
    {
-       $id=my_crypt("id",session('token'),null,null,false);
+       $id=my_crypt("id",session('token'));
        cache('login_time'.$id,NULL);
-       if(empty($cookie_prefix))
-           $cookie_prefix=config('cookie.prefix');
+       $cookie_prefix=config('cookie.prefix');
        cookie(null,$cookie_prefix);
        session(null);
        return redirect(config('login_url'));
