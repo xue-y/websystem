@@ -66,13 +66,11 @@
 {include file="static/back/com_js.html" /}
 {include file="static/back/foot_form.html" /}
 <script>
-    $("input[type='submit']").click(function (e) {
+	$('.b_from').on('success.form.bv',function(e){
+	// 改为监听事件支持验证
+    //$("input[type='submit']").click(function (e) {
         e.preventDefault();
-        if($("input[type='password']").val()=='')
-        {
-            $("input[type='password']").focus();
-            return;
-        }
+        
         $.ajax({
             type:"POST",
             url:"{:url('unlock')}",
