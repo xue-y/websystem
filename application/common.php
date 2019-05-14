@@ -69,27 +69,27 @@ function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
         case 'mode':
             if($behavior==true)
             {
-                $k=base64_encode($secret_name,$secret_key);
-			    $v=base64_encode($data[$key],$k);
+                $k=base64_encode($secret_name.$secret_key);
+			    $v=base64_encode($data[$key]);
                 cookie($k,$v);
             }else
             {
-				$k=base64_encode($secret_name,$secret_key);
+				$k=base64_encode($secret_name.$secret_key);
                 $v=cookie($k);
-				return base64_decode($v,$k);
+				return base64_decode($v);
             }
         break;
         default:
             if($behavior==true)
             {
-                $k=base64_encode($secret_name,$secret_key);
-			    $v=base64_encode($data[$key],$k);
+                $k=base64_encode($secret_key.$secret_name);
+			    $v=base64_encode($data[$key]);
                 cookie($k,$v);
             }else
             {
-				$k=base64_encode($secret_name,$secret_key);
+				$k=base64_encode($secret_key.$secret_name);
                 $v=cookie($k);
-				return base64_decode($v,$k);
+				return base64_decode($v);
             }
     }
 }

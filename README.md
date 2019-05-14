@@ -52,8 +52,10 @@
 php5.6/ php7.0 + Apache/Ngingx 均正常访问，数据库MySql5.5.53，其他版本未测试  
 	
 #### 项目安装     
-直接访问项目目录下的 instll 模块即可，如果安装完成后，再次访问此模块自动跳转到网站前台首页   
-域名指向根目录的public目录
+直接访问项目目录下的 `instll` 模块即可，如果安装完成后，再次访问此模块自动跳转到网站前台首页 
+项目安装完成后在项目根目录下运行一下 `composer install`  
+域名指向根目录的 `public`目录
+后台访问地址 域名/pub/Login/index
 
 #### 后台字段限制   
 + 用户名 name 唯一
@@ -82,6 +84,14 @@ Api 接口，请登录注册百度账号 `https://ai.baidu.com/docs#/OCR-API/top
 	('net_work', '网络图片提取文字', '网络图片提取文字', '网络图片提取文字', 2, '1');  
 	
 **注:**  如果百度Api 接口有所变化，需要相应调整 ai 栏目模板页面，api 调用页面 application/index/controller/Api，api 扩展类文件 extend/ImgWord.php    
+
+#### 验证码说明
+修改验证码配置 /config/captcha.php 
+修改验证码JS验证 /public/static/back/js/validators.js 321行
+
+#### 字段验证说明
+前端JS验证 /public/static/back/js/validators.js
+后端数据表验证 /application/common/validate
 
 
 [ThinkPHP 5.1框架](https://github.com/top-think/think)
