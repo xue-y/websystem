@@ -70,7 +70,7 @@ function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
             if($behavior==true)
             {
                 $k=base64_encode($secret_name.$secret_key);
-			    $v=base64_encode($data[$key]);
+			    $v=base64_encode($data[$secret_name]);
                 cookie($k,$v);
             }else
             {
@@ -83,7 +83,7 @@ function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
             if($behavior==true)
             {
                 $k=base64_encode($secret_key.$secret_name);
-			    $v=base64_encode($data[$key]);
+			    $v=base64_encode($data[$secret_name]);
                 cookie($k,$v);
             }else
             {

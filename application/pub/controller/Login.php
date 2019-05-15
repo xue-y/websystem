@@ -150,7 +150,7 @@ class Login extends Controller
     //TODO 管理员退出
    public function out()
    {
-       $id=my_crypt("id",session('token'));
+       $id=my_crypt("id",session('token'),null,null,false);
        cache('login_time'.$id,NULL);
        $cookie_prefix=config('cookie.prefix');
        cookie(null,$cookie_prefix);
