@@ -12,6 +12,8 @@ use app\common\model\AdminUser;
 use app\common\model\SysSset;
 use app\common\validate\AdminUser as VAdminUser;
 use Crypt\Base64;
+use Crypt\Crypt;
+use Crypt\Think;
 use think\Controller;
 use think\Request;
 
@@ -96,10 +98,11 @@ class Login extends Controller
            cache('open_lockscreen_'.$data['id'],null);
        }
 
-       //判断是否记住用户名
-       $name_key=Base64::encrypt('name',config('secret_key'));
-       $name_val=Base64::encrypt($post['name'],$name_key);
+        // 对应解密函数 crypt_web_name()
+       $name_key=Think::encrypt('name',config('secret_key'));
+       $name_val=Think::encrypt($post['name'],$name_key);
 
+       //判断是否记住用户名
        if(isset($post['re_name']))
        {	   
 		  $cookie_prefix_n=config('cookie.cookie_user_n');

@@ -148,7 +148,7 @@ return [
     "log_shebei"=>"点击弹出/隐藏详细信息",
     // web LockScreen
     "unlock_screen"=>"请输入登录密码解锁",
-    "unlock_error_max"=>"登录密码次数已达上限次数，自动封锁，%d小时候自动解锁",
+    "unlock_error_max"=>"登录密码次数已达上限次数，自动封锁，%d小时候后自动解锁",
     "unlock_residue_degree"=>"密码错误，您还有 %s 次机会",
     // admin user
     "n_unique"=>"用户名已存在",

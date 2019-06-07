@@ -10,8 +10,9 @@
 // +----------------------------------------------------------------------
 //应用公共文件
 
-/** @param $str 要转义的字符
- *  @return  返回转义后的字符
+/**
+ * @param $str 要转义的字符
+ * @return  返回转义后的字符
  * */
 function trim_str($str)
 {
@@ -69,27 +70,23 @@ function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
         case 'mode':
             if($behavior==true)
             {
-                $k=base64_encode($secret_name.$secret_key);
-			    $v=base64_encode($data[$secret_name]);
-                cookie($k,$v);
+                cookie($secret_name,$data[$secret_name]);
             }else
             {
-				$k=base64_encode($secret_name.$secret_key);
-                $v=cookie($k);
-				return base64_decode($v);
+				return cookie($secret_name);
             }
         break;
         default:
             if($behavior==true)
             {
-                $k=base64_encode($secret_key.$secret_name);
-			    $v=base64_encode($data[$secret_name]);
+                $k=\Crypt\Think::encrypt($secret_name,$secret_key);
+                $v=\Crypt\Think::encrypt($data[$secret_name],$k);
                 cookie($k,$v);
             }else
             {
-				$k=base64_encode($secret_key.$secret_name);
+                $k=\Crypt\Think::encrypt($secret_name,$secret_key);
                 $v=cookie($k);
-				return base64_decode($v);
+                return \Crypt\Think::decrypt($v,$k);
             }
     }
 }
@@ -97,22 +94,22 @@ function my_crypt($secret_name,$secret_key,$data,$mode=null,$behavior=true)
 // 管理员用户名解密
 function crypt_web_name()
 {
-    $n_key=\Crypt\Base64::encrypt("name",config('secret_key'));
+    //Cookie名称不能包含以下任何内容”=,;\ t \ r \ n \ 013 \ 014'“
+    $n_key=\Crypt\Think::encrypt("name",config('secret_key'));
     $cookie_prefix_n=config('cookie.cookie_user_n');
 
 	if(Cookie::has($n_key,$cookie_prefix_n))
     {
         $n_val=Cookie::get($n_key,$cookie_prefix_n); // 登录是记住用户名
-    }else
-    {
-        $n_val=Cookie::get($n_key); // 登录时没有记住用户名
+    }else{
+        $n_val= Cookie::get($n_key); // 登录时没有记住用户名
     }
 	
     if(empty($n_val))
     {
         return null;
     }
-    return \Crypt\Base64::decrypt($n_val,$n_key);
+	return \Crypt\Think::decrypt($n_val,$n_key);
 }
 
 /** 一次性加密id 值

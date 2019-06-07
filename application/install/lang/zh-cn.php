@@ -59,7 +59,7 @@ return [
     "web_title"=>"AI 站点网站名称",
     "email_interval_t"=>"发送邮件时间间隔，时间单位秒",
     "email_send_c"=>"email_t 时间内可发送的邮件次数",
-    "lock_t"=>"登录密码错误解封时间",
+    "lock_t"=>"登录密码错误解封时间，时间单位秒",
     "email_t"=>"邮件发送超过最大限额多长时间后可以再次发送，单位是秒",
     "email_activate_t"=>"发送邮件后邮件有效时间内激活，单位是秒",
     "web_foot"=>"网站底部",

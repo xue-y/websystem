@@ -187,7 +187,7 @@
             }
         },
         identical: {
-            'default': '请输入相同的值'
+            'default': '请输入与确认输入框相同的值'
         },
         imei: {
             'default': '请输入有效的IMEI(手机串号)'
