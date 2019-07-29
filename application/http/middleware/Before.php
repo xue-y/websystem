@@ -8,10 +8,10 @@
 
 namespace app\http\middleware;
 
-
 use app\common\model\AdminPower;
 use app\common\model\AdminRole;
 use app\common\model\SysSset;
+use think\facade\Env;
 
 class Before
 {
@@ -24,7 +24,14 @@ class Before
 
        if($current_m==='index')
        {
-           return $next($request);
+           // 验证是否安装程序，如果没有安装跳转安装页面
+           $route=Env::get('route_path');
+           $install_route=$route."install.php";
+           if(file_exists($install_route)){
+               return $next($request);
+           }else{
+               return redirect('install/Index/index');
+           }
        }
 
         // 如果访问的是安装模块，并且已经定义了路由代表已经安装过了
