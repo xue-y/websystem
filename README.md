@@ -93,5 +93,7 @@ Api 接口，请登录注册百度账号 `https://ai.baidu.com/docs#/OCR-API/top
 前端JS验证 /public/static/back/js/validators.js
 后端数据表验证 /application/common/validate
 
+**注:**  后台管理员设置不允许多终端同时登录时，如果管理员退出没有点击退出按钮退出，下次进入登录后会提示账号在其他地方登录过警告
+
 
 [ThinkPHP 5.1框架](https://github.com/top-think/think)
